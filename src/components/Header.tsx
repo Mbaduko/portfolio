@@ -7,29 +7,47 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'bio', 'skills'];
-      const scrollPosition = window.scrollY + 100; // Offset for header height
+      const mainElement = document.querySelector('main');
+      if (!mainElement) return;
+
+      const sections = ['home', 'bio', 'skills', 'projects', 'technologies', 'contact'];
+      const scrollPosition = mainElement.scrollTop;
+      const viewportHeight = mainElement.clientHeight;
+      const threshold = 100; // Threshold for section detection
 
       // Check if we're at the very top (hero section)
-      if (scrollPosition < 200) {
+      if (scrollPosition < threshold) {
         setActiveSection('home');
         return;
       }
 
+      let currentSection = 'home';
+
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
+          const elementTop = element.offsetTop;
+          const elementBottom = elementTop + element.offsetHeight;
+          
+          // Check if the section is in the viewport
+          if (scrollPosition + threshold >= elementTop && 
+              scrollPosition + threshold < elementBottom) {
+            currentSection = section;
             break;
           }
         }
       }
+
+      setActiveSection(currentSection);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const mainElement = document.querySelector('main');
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll);
+      // Initial call to set correct active section
+      handleScroll();
+      return () => mainElement.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   const scrollToSection = (sectionId: string) => {
@@ -57,9 +75,9 @@ export default function Header() {
           <nav className="hidden md:flex space-x-8">
             <button 
               onClick={() => scrollToSection('home')}
-              className={`transition-all duration-200 px-3 py-2 rounded-lg ${
+              className={`transition-all duration-300 ease-in-out px-3 py-2 rounded-lg ${
                 activeSection === 'home' || activeSection === 'bio'
-                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20' 
+                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20 shadow-sm' 
                   : 'text-foreground hover:text-accent-text hover:bg-secondary-bg/30'
               }`}
             >
@@ -67,21 +85,42 @@ export default function Header() {
             </button>
             <button 
               onClick={() => scrollToSection('skills')}
-              className={`transition-all duration-200 px-3 py-2 rounded-lg ${
+              className={`transition-all duration-300 ease-in-out px-3 py-2 rounded-lg ${
                 activeSection === 'skills' 
-                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20' 
+                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20 shadow-sm' 
                   : 'text-foreground hover:text-accent-text hover:bg-secondary-bg/30'
               }`}
             >
               Skills
             </button>
-            <button className="text-foreground hover:text-accent-text transition-colors">
+            <button 
+              onClick={() => scrollToSection('projects')}
+              className={`transition-all duration-300 ease-in-out px-3 py-2 rounded-lg ${
+                activeSection === 'projects' 
+                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20 shadow-sm' 
+                  : 'text-foreground hover:text-accent-text hover:bg-secondary-bg/30'
+              }`}
+            >
               Projects
             </button>
-            <button className="text-foreground hover:text-accent-text transition-colors">
+            <button 
+              onClick={() => scrollToSection('technologies')}
+              className={`transition-all duration-300 ease-in-out px-3 py-2 rounded-lg ${
+                activeSection === 'technologies' 
+                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20 shadow-sm' 
+                  : 'text-foreground hover:text-accent-text hover:bg-secondary-bg/30'
+              }`}
+            >
               Technologies
             </button>
-            <button className="text-foreground hover:text-accent-text transition-colors">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className={`transition-all duration-300 ease-in-out px-3 py-2 rounded-lg ${
+                activeSection === 'contact' 
+                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20 shadow-sm' 
+                  : 'text-foreground hover:text-accent-text hover:bg-secondary-bg/30'
+              }`}
+            >
               Contact
             </button>
           </nav>
