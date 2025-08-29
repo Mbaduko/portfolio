@@ -61,6 +61,16 @@ export default function Sidebar() {
             <span className="text-sm text-foreground">+250 791 130 583</span>
           </div>
 
+          {/* Email */}
+          <div className="flex items-start space-x-3">
+            <div className="w-8 h-8 bg-secondary-bg rounded flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 text-foreground" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M0 4C0 2.895 0.895 2 2 2H18C19.105 2 20 2.895 20 4V16C20 17.105 19.105 18 18 18H2C0.895 18 0 17.105 0 16V4ZM2 6L10 11L18 6V4L10 9L2 4V6Z"/>
+              </svg>
+            </div>
+            <span className="text-sm text-foreground break-all">nsengiyumvaclement247@gmail.com</span>
+          </div>
+
           {/* GitHub */}
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-secondary-bg rounded flex items-center justify-center">
