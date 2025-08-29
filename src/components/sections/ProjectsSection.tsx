@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import SectionWrapper from '@/components/ui/SectionWrapper';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 export default function ProjectsSection() {
   const [showAllProjects, setShowAllProjects] = useState(false);
@@ -226,12 +228,13 @@ export default function ProjectsSection() {
   ];
 
   return (
-    <div id="projects" className="mb-12">
-      <div className="flex items-center space-x-4 mb-6">
-        <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
-          Projects
-        </button>
-      </div>
+    <SectionWrapper id="projects" padding="lg" showBackground>
+      <SectionHeader
+        title="Featured Projects"
+        subtitle="Showcase of my best work and contributions"
+        icon="🚀"
+        variant="primary"
+      />
       
               <div className="pl-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -332,6 +335,6 @@ export default function ProjectsSection() {
             </div>
           )}
         </div>
-    </div>
+    </SectionWrapper>
   );
 }

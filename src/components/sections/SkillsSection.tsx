@@ -1,3 +1,6 @@
+import SectionWrapper from '@/components/ui/SectionWrapper';
+import SectionHeader from '@/components/ui/SectionHeader';
+
 export default function SkillsSection() {
   const skills = [
     {
@@ -63,14 +66,15 @@ export default function SkillsSection() {
   ];
 
   return (
-    <div id="skills" className="mb-12">
-      <div className="flex items-center space-x-4 mb-6">
-        <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
-          Skills
-        </button>
-      </div>
+    <SectionWrapper id="skills" padding="lg" showBackground>
+      <SectionHeader
+        title="Skills & Expertise"
+        subtitle="Technical competencies and specializations"
+        icon="⚡"
+        variant="secondary"
+      />
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pl-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {skills.map((skill) => (
           <div key={skill.id} className="bg-secondary-bg/50 p-6 rounded-lg border border-secondary-bg/20">
             <div className="flex items-center justify-center w-12 h-12 bg-primary-button/20 rounded-lg mb-4">
@@ -96,6 +100,6 @@ export default function SkillsSection() {
           </div>
         ))}
       </div>
-    </div>
+    </SectionWrapper>
   );
 }

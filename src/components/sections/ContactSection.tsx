@@ -1,11 +1,15 @@
+import SectionWrapper from '@/components/ui/SectionWrapper';
+import SectionHeader from '@/components/ui/SectionHeader';
+
 export default function ContactSection() {
   return (
-    <div id="contact" className="mb-12">
-      <div className="flex items-center space-x-4 mb-6">
-        <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
-          Contact
-        </button>
-      </div>
+    <SectionWrapper id="contact" padding="lg" showBackground>
+      <SectionHeader
+        title="Get In Touch"
+        subtitle="Let's discuss opportunities and collaborations"
+        icon="📧"
+        variant="accent"
+      />
       
       <div className="pl-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -115,6 +119,6 @@ export default function ContactSection() {
           </div>
         </div>
       </div>
-    </div>
+    </SectionWrapper>
   );
 }

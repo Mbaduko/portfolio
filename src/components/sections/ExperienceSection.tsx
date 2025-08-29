@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import SectionWrapper from '@/components/ui/SectionWrapper';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 export default function ExperienceSection() {
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
@@ -101,14 +103,15 @@ export default function ExperienceSection() {
   };
 
   return (
-    <div id="experience" className="mb-12">
-      <div className="flex items-center space-x-4 mb-6">
-        <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
-          Experience
-        </button>
-      </div>
+    <SectionWrapper id="experience" padding="lg">
+      <SectionHeader
+        title="Professional Experience"
+        subtitle="Work history and career progression"
+        icon="💼"
+        variant="accent"
+      />
       
-      <div className="space-y-8 pl-6">
+      <div className="space-y-8">
         {experiences.map((experience, index) => (
           <div key={experience.id} className="relative group">
             {/* Timeline connector */}
@@ -211,6 +214,6 @@ export default function ExperienceSection() {
           </div>
         ))}
       </div>
-    </div>
+    </SectionWrapper>
   );
 }

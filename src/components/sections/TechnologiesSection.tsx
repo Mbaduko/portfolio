@@ -1,11 +1,15 @@
+import SectionWrapper from '@/components/ui/SectionWrapper';
+import SectionHeader from '@/components/ui/SectionHeader';
+
 export default function TechnologiesSection() {
   return (
-    <div id="technologies" className="mb-12">
-      <div className="flex items-center space-x-4 mb-6">
-        <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
-          Technologies
-        </button>
-      </div>
+    <SectionWrapper id="technologies" padding="lg">
+      <SectionHeader
+        title="Technology Stack"
+        subtitle="Tools, frameworks, and technologies I work with"
+        icon="🛠️"
+        variant="secondary"
+      />
       
       <div className="pl-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -103,6 +107,6 @@ export default function TechnologiesSection() {
           </div>
         </div>
       </div>
-    </div>
+    </SectionWrapper>
   );
 }
