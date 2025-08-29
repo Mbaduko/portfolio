@@ -10,7 +10,7 @@ export default function Header() {
       const mainElement = document.querySelector('main');
       if (!mainElement) return;
 
-      const sections = ['home', 'bio', 'skills', 'projects', 'technologies', 'contact'];
+      const sections = ['home', 'bio', 'skills', 'experience', 'projects', 'technologies', 'contact'];
       const scrollPosition = mainElement.scrollTop;
       const viewportHeight = mainElement.clientHeight;
       const threshold = 100; // Threshold for section detection
@@ -92,6 +92,16 @@ export default function Header() {
               }`}
             >
               Skills
+            </button>
+            <button 
+              onClick={() => scrollToSection('experience')}
+              className={`transition-all duration-300 ease-in-out px-3 py-2 rounded-lg ${
+                activeSection === 'experience' 
+                  ? 'text-accent-text font-semibold bg-secondary-bg/50 border border-accent-text/20 shadow-sm' 
+                  : 'text-foreground hover:text-accent-text hover:bg-secondary-bg/30'
+              }`}
+            >
+              Experience
             </button>
             <button 
               onClick={() => scrollToSection('projects')}
