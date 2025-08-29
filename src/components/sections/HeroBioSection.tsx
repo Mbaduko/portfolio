@@ -2,14 +2,14 @@ export default function HeroBioSection() {
   return (
     <div className="mb-12">
       {/* Hero Section */}
-      <div className="mb-12">
+      <div id="home" className="mb-12">
         <h1 className="text-5xl font-bold text-foreground mb-6">
           Let's Digitize Our World!!
         </h1>
       </div>
 
       {/* Bio Section */}
-      <div className="mb-12">
+      <div id="bio" className="mb-12">
         <div className="flex items-center space-x-4 mb-6">
           <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
             Bio

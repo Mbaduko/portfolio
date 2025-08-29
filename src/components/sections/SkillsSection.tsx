@@ -1,6 +1,6 @@
 export default function SkillsSection() {
   return (
-    <div className="mb-12">
+    <div id="skills" className="mb-12">
       <div className="flex items-center space-x-4 mb-6">
         <button className="bg-secondary-bg text-accent-text px-4 py-2 rounded-lg text-sm font-medium">
           Skills
