@@ -6,11 +6,13 @@ import SectionHeader from '@/components/ui/SectionHeader';
 
 export default function ExperienceSection() {
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   const experiences = [
     {
       id: 1,
       company: "TechCorp Solutions",
+      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
       position: "Senior Full Stack Developer",
       location: "Kigali, Rwanda",
       duration: "Jan 2023 - Present",
@@ -32,6 +34,7 @@ export default function ExperienceSection() {
     {
       id: 2,
       company: "Digital Innovations Ltd",
+      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoft/microsoft-original.svg",
       position: "Backend Developer",
       location: "Remote",
       duration: "Mar 2022 - Dec 2022",
@@ -53,6 +56,7 @@ export default function ExperienceSection() {
     {
       id: 3,
       company: "StartupHub",
+      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg",
       position: "Junior Developer",
       location: "Kigali, Rwanda",
       duration: "Jun 2021 - Feb 2022",
@@ -74,6 +78,7 @@ export default function ExperienceSection() {
     {
       id: 4,
       company: "Freelance Developer",
+      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazon/amazon-original.svg",
       position: "Web Developer",
       location: "Remote",
       duration: "Jan 2021 - May 2021",
@@ -100,6 +105,14 @@ export default function ExperienceSection() {
         ? prev.filter(item => item !== id)
         : [...prev, id]
     );
+  };
+
+  const handleImageError = (imageKey: string) => {
+    setImageErrors(prev => new Set(prev).add(imageKey));
+  };
+
+  const isImageError = (imageKey: string) => {
+    return imageErrors.has(imageKey);
   };
 
   return (
@@ -137,11 +150,28 @@ export default function ExperienceSection() {
               <div className="flex-1 bg-gradient-to-br from-secondary-bg/60 to-secondary-bg/30 p-8 rounded-xl border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary-button/20">
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
                       {experience.position}
                     </h3>
-                    <p className="text-primary-button font-semibold text-lg">{experience.company}</p>
+                    <div className="flex items-center space-x-3">
+                      {/* Company Logo */}
+                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-2 border border-secondary-bg/30 shadow-sm">
+                        {isImageError(`company-${experience.id}`) ? (
+                          <span className="text-xs font-bold text-primary-button">
+                            {experience.company.charAt(0)}
+                          </span>
+                        ) : (
+                          <img 
+                            src={experience.companyLogo} 
+                            alt={`${experience.company} logo`}
+                            className="w-full h-full object-contain"
+                            onError={() => handleImageError(`company-${experience.id}`)}
+                          />
+                        )}
+                      </div>
+                      <p className="text-primary-button font-semibold text-lg">{experience.company}</p>
+                    </div>
                     <div className="flex items-center space-x-2">
                       <svg className="w-4 h-4 text-accent-text" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
