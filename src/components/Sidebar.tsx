@@ -1,8 +1,63 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 export default function Sidebar() {
+  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
+  const [currentText, setCurrentText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingSpeed, setTypingSpeed] = useState(100);
+
+  const skills = [
+    "Web Developer",
+    "Full-Stack Engineer", 
+    "DevOps Specialist",
+    "Cloud Architect",
+    "Database Administrator",
+    "System Administrator",
+    "UI/UX Designer",
+    "API Developer",
+    "Mobile Developer",
+    "Software Engineer"
+  ];
+
+  useEffect(() => {
+    const currentSkill = skills[currentSkillIndex];
+    
+    if (!isDeleting) {
+      // Typing effect
+      if (currentText.length < currentSkill.length) {
+        const timeout = setTimeout(() => {
+          setCurrentText(currentSkill.slice(0, currentText.length + 1));
+          setTypingSpeed(100);
+        }, typingSpeed);
+        return () => clearTimeout(timeout);
+      } else {
+        // Pause before deleting
+        const timeout = setTimeout(() => {
+          setIsDeleting(true);
+          setTypingSpeed(50);
+        }, 2000);
+        return () => clearTimeout(timeout);
+      }
+    } else {
+      // Deleting effect
+      if (currentText.length > 0) {
+        const timeout = setTimeout(() => {
+          setCurrentText(currentText.slice(0, currentText.length - 1));
+          setTypingSpeed(50);
+        }, typingSpeed);
+        return () => clearTimeout(timeout);
+      } else {
+        // Move to next skill
+        setIsDeleting(false);
+        setCurrentSkillIndex((prevIndex) => (prevIndex + 1) % skills.length);
+        setTypingSpeed(100);
+      }
+    }
+  }, [currentText, isDeleting, currentSkillIndex, typingSpeed, skills]);
+
   return (
     <aside className="w-80 bg-gradient-to-b from-background to-background/95 border-r border-secondary-bg/30 p-8 space-y-8 shadow-lg">
       {/* Profile Section */}
@@ -36,7 +91,14 @@ export default function Sidebar() {
           <h2 className="text-2xl font-bold bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent">
             Clement NSENGIYUMVA
           </h2>
-          <p className="text-foreground font-semibold text-lg">Software Developer</p>
+          <div className="h-6 flex items-center justify-center">
+            <span className="text-foreground font-semibold text-lg">
+              {currentText}
+              <span className={`inline-block w-0.5 h-5 bg-primary-button ml-1 transition-opacity duration-300 ${
+                isDeleting ? 'opacity-0' : 'opacity-100'
+              }`}></span>
+            </span>
+          </div>
           <div className="flex items-center justify-center space-x-2 text-accent-text text-sm">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
