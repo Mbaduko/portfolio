@@ -17,11 +17,11 @@ export default function ExperienceSection() {
       shortDescription: "Leading development of enterprise web applications using React, Node.js, and PostgreSQL.",
       fullDescription: "Leading development of enterprise web applications using React, Node.js, and PostgreSQL. Mentoring junior developers and implementing CI/CD pipelines.",
       technologies: [
-        { name: "React", icon: "⚛️", color: "text-blue-400" },
-        { name: "Node.js", icon: "🟢", color: "text-green-500" },
-        { name: "PostgreSQL", icon: "🐘", color: "text-blue-600" },
-        { name: "Docker", icon: "🐳", color: "text-blue-500" },
-        { name: "AWS", icon: "☁️", color: "text-orange-500" }
+        { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+        { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" }
       ],
       achievements: [
         "Reduced application load time by 40% through optimization",
@@ -38,11 +38,11 @@ export default function ExperienceSection() {
       shortDescription: "Developed RESTful APIs and microservices using Python, Django, and MongoDB.",
       fullDescription: "Developed RESTful APIs and microservices using Python, Django, and MongoDB. Collaborated with frontend team to ensure seamless integration.",
       technologies: [
-        { name: "Python", icon: "🐍", color: "text-yellow-500" },
-        { name: "Django", icon: "🟢", color: "text-green-600" },
-        { name: "MongoDB", icon: "🍃", color: "text-green-400" },
-        { name: "Redis", icon: "🔴", color: "text-red-500" },
-        { name: "Docker", icon: "🐳", color: "text-blue-500" }
+        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+        { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
+        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+        { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" },
+        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" }
       ],
       achievements: [
         "Built 15+ REST APIs serving 10,000+ daily requests",
@@ -59,11 +59,11 @@ export default function ExperienceSection() {
       shortDescription: "Contributed to various web development projects using modern JavaScript frameworks.",
       fullDescription: "Contributed to various web development projects using modern JavaScript frameworks. Participated in code reviews and agile development processes.",
       technologies: [
-        { name: "JavaScript", icon: "🟡", color: "text-yellow-400" },
-        { name: "Vue.js", icon: "💚", color: "text-green-400" },
-        { name: "Express.js", icon: "⚡", color: "text-gray-400" },
-        { name: "MySQL", icon: "🐬", color: "text-blue-500" },
-        { name: "Git", icon: "📝", color: "text-orange-600" }
+        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "Vue.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+        { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" }
       ],
       achievements: [
         "Developed 3 client websites from concept to deployment",
@@ -80,11 +80,11 @@ export default function ExperienceSection() {
       shortDescription: "Worked with various clients to build custom websites and web applications.",
       fullDescription: "Worked with various clients to build custom websites and web applications. Managed project timelines and client communications.",
       technologies: [
-        { name: "HTML", icon: "🌐", color: "text-orange-500" },
-        { name: "CSS", icon: "🎨", color: "text-blue-500" },
-        { name: "JavaScript", icon: "🟡", color: "text-yellow-400" },
-        { name: "PHP", icon: "🐘", color: "text-purple-500" },
-        { name: "WordPress", icon: "📝", color: "text-blue-600" }
+        { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "PHP", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+        { name: "WordPress", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" }
       ],
       achievements: [
         "Completed 8 client projects successfully",
@@ -95,8 +95,8 @@ export default function ExperienceSection() {
   ];
 
   const toggleExpanded = (id: number) => {
-    setExpandedItems(prev => 
-      prev.includes(id) 
+    setExpandedItems(prev =>
+      prev.includes(id)
         ? prev.filter(item => item !== id)
         : [...prev, id]
     );
@@ -107,10 +107,15 @@ export default function ExperienceSection() {
       <SectionHeader
         title="Professional Experience"
         subtitle="Work history and career progression"
-        icon="💼"
+        icon={
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
+            <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+          </svg>
+        }
         variant="accent"
       />
-      
+
       <div className="space-y-8">
         {experiences.map((experience, index) => (
           <div key={experience.id} className="relative group">
@@ -118,16 +123,16 @@ export default function ExperienceSection() {
             {index < experiences.length - 1 && (
               <div className="absolute left-6 top-20 w-0.5 h-24 bg-gradient-to-b from-primary-button/40 to-secondary-bg/20"></div>
             )}
-            
+
             <div className="flex items-start space-x-6">
               {/* Timeline dot */}
-              <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-primary-button/30 to-primary-button/10 rounded-full flex items-center justify-center border-2 border-primary-button/40 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-6 h-6 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex-shrink-0 w-12 h-12 bg-primary-button/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
                   <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
                 </svg>
               </div>
-              
+
               {/* Experience content */}
               <div className="flex-1 bg-gradient-to-br from-secondary-bg/60 to-secondary-bg/30 p-8 rounded-xl border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary-button/20">
                 {/* Header */}
@@ -164,12 +169,12 @@ export default function ExperienceSection() {
                     </button>
                   </div>
                 </div>
-                
+
                 {/* Description */}
                 <p className="text-accent-text text-base leading-relaxed mb-6">
                   {expandedItems.includes(experience.id) ? experience.fullDescription : experience.shortDescription}
                 </p>
-                
+
                 {/* Technologies - Show only when expanded */}
                 {expandedItems.includes(experience.id) && (
                   <div className="mb-6">
@@ -181,15 +186,29 @@ export default function ExperienceSection() {
                     </h4>
                     <div className="flex flex-wrap gap-3">
                       {experience.technologies.map((tech, techIndex) => (
-                        <span key={techIndex} className={`bg-gradient-to-r from-secondary-bg/80 to-secondary-bg/60 text-foreground px-4 py-2 rounded-lg text-sm font-medium border border-secondary-bg/40 flex items-center space-x-2 hover:scale-105 transition-transform duration-200 ${tech.color}`}>
-                          <span className="text-lg">{tech.icon}</span>
-                          <span>{tech.name}</span>
+                        <span key={techIndex} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 hover:scale-105 hover:border-primary-button/40 transition-all duration-200 flex items-center gap-3 shadow-sm hover:shadow-md">
+                          <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1">
+                            <img 
+                              src={tech.logo} 
+                              alt={`${tech.name} logo`}
+                              className="w-full h-full object-contain"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const parent = target.parentElement;
+                                if (parent) {
+                                  parent.innerHTML = `<span class="text-xs font-bold text-primary-button">${tech.name.charAt(0)}</span>`;
+                                }
+                              }}
+                            />
+                          </div>
+                          <span className="font-medium">{tech.name}</span>
                         </span>
                       ))}
                     </div>
                   </div>
                 )}
-                
+
                 {/* Key Achievements - Show only when expanded */}
                 {expandedItems.includes(experience.id) && (
                   <div>
