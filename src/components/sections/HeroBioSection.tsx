@@ -87,7 +87,7 @@ export default function HeroBioSection() {
       {/* Hero Title - More Compact */}
       <div className="text-center mb-8">
         <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent">
-          Let's Digitize Our World!!
+          Let's Digitize Our Continent!!
         </h1>
         <div className="w-16 h-1 bg-gradient-to-r from-primary-button to-accent-text mx-auto rounded-full"></div>
       </div>

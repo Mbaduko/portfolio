@@ -123,17 +123,24 @@ export default function Sidebar() {
         </div>
         
         <div className="space-y-4 pl-4">
-          {/* Phone */}
-          <a href="tel:+250791130583" className="flex items-start space-x-4 p-3 bg-secondary-bg/30 rounded-xl border border-secondary-bg/20 hover:border-primary-button/30 transition-all duration-300 hover:scale-105 hover:bg-secondary-bg/40">
+          {/* Phone 1 */}
+          <a href="tel:+250791130583" className="flex items-center space-x-4 p-3 bg-secondary-bg/30 rounded-xl border border-secondary-bg/20 hover:border-primary-button/30 transition-all duration-300 hover:scale-105 hover:bg-secondary-bg/40">
             <div className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center flex-shrink-0">
               <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
             </div>
-            <div className="flex flex-col space-y-1">
-              <span className="text-sm font-medium text-foreground hover:text-white transition-colors duration-300">+250 791 130 583</span>
-              <span className="text-sm font-medium text-foreground hover:text-white transition-colors duration-300">+250 726 542 585</span>
+            <span className="text-sm font-medium text-foreground hover:text-white transition-colors duration-300">+250 791 130 583</span>
+          </a>
+
+          {/* Phone 2 */}
+          <a href="tel:+250726542585" className="flex items-center space-x-4 p-3 bg-secondary-bg/30 rounded-xl border border-secondary-bg/20 hover:border-primary-button/30 transition-all duration-300 hover:scale-105 hover:bg-secondary-bg/40">
+            <div className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+              </svg>
             </div>
+            <span className="text-sm font-medium text-foreground hover:text-white transition-colors duration-300">+250 726 542 585</span>
           </a>
 
           {/* WhatsApp */}
