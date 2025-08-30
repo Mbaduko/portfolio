@@ -65,9 +65,14 @@ export default function Header() {
           <div className="flex-shrink-0">
             <button 
               onClick={() => scrollToSection('home')}
-              className="text-2xl font-bold bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent hover:scale-105 transition-all duration-300"
+              className="flex items-center space-x-2 text-2xl font-bold bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent hover:scale-105 transition-all duration-300"
             >
-              Mbaduko
+              <div className="w-8 h-8 bg-gradient-to-r from-primary-button to-accent-text rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <span>Mbaduko</span>
             </button>
           </div>
 
