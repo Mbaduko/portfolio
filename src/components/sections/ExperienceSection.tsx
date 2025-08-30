@@ -134,12 +134,12 @@ export default function ExperienceSection() {
           <div key={experience.id} className="relative group">
             {/* Timeline connector */}
             {index < experiences.length - 1 && (
-              <div className="absolute left-6 top-20 w-0.5 h-24 bg-gradient-to-b from-primary-button/40 to-secondary-bg/20"></div>
+              <div className="absolute left-6 top-20 w-0.5 h-24 bg-gradient-to-b from-primary-button/40 via-primary-button/20 to-transparent"></div>
             )}
 
             <div className="flex items-start space-x-6">
               {/* Timeline dot */}
-              <div className="flex-shrink-0 w-12 h-12 bg-primary-button/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-primary-button/30 to-primary-button/10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 border border-primary-button/20 shadow-sm">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
                   <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
@@ -147,7 +147,13 @@ export default function ExperienceSection() {
               </div>
 
               {/* Experience content */}
-              <div className="flex-1 bg-gradient-to-br from-secondary-bg/60 to-secondary-bg/30 p-8 rounded-xl border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary-button/20">
+              <div className="flex-1 bg-gradient-to-br from-secondary-bg/60 to-secondary-bg/30 p-8 rounded-xl border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary-button/20 relative overflow-hidden">
+                {/* Background decoration */}
+                <div className="absolute inset-0 opacity-5">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-button/20 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-accent-text/20 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+                </div>
+
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                   <div className="space-y-3">
@@ -156,7 +162,7 @@ export default function ExperienceSection() {
                     </h3>
                     <div className="flex items-center space-x-3">
                       {/* Company Logo */}
-                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-2 border border-secondary-bg/30 shadow-sm">
+                      <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-2 border border-secondary-bg/30 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105">
                         {isImageError(`company-${experience.id}`) ? (
                           <span className="text-xs font-bold text-primary-button">
                             {experience.company.charAt(0)}
@@ -180,12 +186,13 @@ export default function ExperienceSection() {
                     </div>
                   </div>
                   <div className="mt-4 sm:mt-0 flex items-center space-x-4">
-                    <span className="bg-gradient-to-r from-primary-button/20 to-primary-button/10 text-primary-button px-4 py-2 rounded-full text-sm font-semibold border border-primary-button/20">
+                    <span className="bg-gradient-to-r from-primary-button/20 to-primary-button/10 text-primary-button px-4 py-2 rounded-full text-sm font-semibold border border-primary-button/20 shadow-sm hover:shadow-md transition-all duration-300">
                       {experience.duration}
                     </span>
                     <button
                       onClick={() => toggleExpanded(experience.id)}
-                      className="text-accent-text hover:text-primary-button transition-all duration-300 hover:scale-110"
+                      className="bg-secondary-bg/50 hover:bg-secondary-bg/70 text-accent-text hover:text-primary-button transition-all duration-300 hover:scale-110 p-2 rounded-lg border border-secondary-bg/30 hover:border-primary-button/30 cursor-pointer relative z-10"
+                      style={{ minWidth: '40px', minHeight: '40px' }}
                     >
                       <svg 
                         className={`w-6 h-6 transition-transform duration-300 ${
@@ -201,9 +208,15 @@ export default function ExperienceSection() {
                 </div>
 
                 {/* Description */}
-                <p className="text-accent-text text-base leading-relaxed mb-6">
-                  {expandedItems.includes(experience.id) ? experience.fullDescription : experience.shortDescription}
-                </p>
+                <div className="relative">
+                  <p className="text-accent-text text-base leading-relaxed mb-6">
+                    {expandedItems.includes(experience.id) ? experience.fullDescription : experience.shortDescription}
+                  </p>
+                  {!expandedItems.includes(experience.id) && (
+                    <div className="absolute bottom-0 right-0 w-16 h-8 bg-gradient-to-l from-secondary-bg/60 to-transparent"></div>
+                  )}
+
+                </div>
 
                 {/* Technologies - Show only when expanded */}
                 {expandedItems.includes(experience.id) && (
@@ -218,19 +231,18 @@ export default function ExperienceSection() {
                       {experience.technologies.map((tech, techIndex) => (
                         <span key={techIndex} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 hover:scale-105 hover:border-primary-button/40 transition-all duration-200 flex items-center gap-3 shadow-sm hover:shadow-md">
                           <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1">
-                            <img 
-                              src={tech.logo} 
-                              alt={`${tech.name} logo`}
-                              className="w-full h-full object-contain"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                                const parent = target.parentElement;
-                                if (parent) {
-                                  parent.innerHTML = `<span class="text-xs font-bold text-primary-button">${tech.name.charAt(0)}</span>`;
-                                }
-                              }}
-                            />
+                            {isImageError(`tech-${experience.id}-${techIndex}`) ? (
+                              <span className="text-xs font-bold text-primary-button">
+                                {tech.name.charAt(0)}
+                              </span>
+                            ) : (
+                              <img 
+                                src={tech.logo} 
+                                alt={`${tech.name} logo`}
+                                className="w-full h-full object-contain"
+                                onError={() => handleImageError(`tech-${experience.id}-${techIndex}`)}
+                              />
+                            )}
                           </div>
                           <span className="font-medium">{tech.name}</span>
                         </span>
