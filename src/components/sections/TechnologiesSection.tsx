@@ -51,66 +51,33 @@ export default function TechnologiesSection() {
     return acc;
   }, {} as Record<string, typeof technologies>);
 
-  // Create category metadata
+  // Create category metadata dynamically from backend category names
   const getCategoryInfo = (category: string) => {
-    const categoryMap: Record<string, { title: string; description: string; icon: JSX.Element }> = {
-      frontend: {
-        title: "Frontend Development",
-        description: "Modern web technologies and frameworks",
-        icon: (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-          </svg>
-        )
-      },
-      backend: {
-        title: "Backend Development",
-        description: "Server-side technologies and APIs",
-        icon: (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-          </svg>
-        )
-      },
-      database: {
-        title: "Database & Storage",
-        description: "Data management and persistence solutions",
-        icon: (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-          </svg>
-        )
-      },
-      devops: {
-        title: "DevOps & Cloud",
-        description: "Infrastructure and deployment technologies",
-        icon: (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clipRule="evenodd" />
-          </svg>
-        )
-      },
-      mobile: {
-        title: "Mobile Development",
-        description: "Mobile application frameworks and tools",
-        icon: (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zM6 4a1 1 0 011-1h6a1 1 0 011 1v10a1 1 0 01-1 1H7a1 1 0 01-1-1V4zm4 12a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-          </svg>
-        )
-      },
-      other: {
-        title: "Other Technologies",
-        description: "Additional tools and technologies",
-        icon: (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-          </svg>
-        )
-      }
+    // Default icon for any category
+    const defaultIcon = (
+      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+      </svg>
+    );
+
+    // Capitalize and format the category name from backend
+    const formatCategoryTitle = (cat: string) => {
+      return cat
+        .split(/[-_\s]+/) // Split on hyphens, underscores, or spaces
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
     };
 
-    return categoryMap[category] || categoryMap.other;
+    // Generate a generic description
+    const generateDescription = (cat: string) => {
+      return `${formatCategoryTitle(cat)} technologies and tools`;
+    };
+
+    return {
+      title: formatCategoryTitle(category),
+      description: generateDescription(category),
+      icon: defaultIcon
+    };
   };
 
   const handleImageError = (imageKey: string) => {
