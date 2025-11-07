@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useSkills } from '@/lib/graphql/hooks';
 
 export default function Sidebar() {
   const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
@@ -9,18 +10,19 @@ export default function Sidebar() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [typingSpeed, setTypingSpeed] = useState(100);
 
-  const skills = [
-    "Web Developer",
-    "Full-Stack Engineer", 
-    "DevOps Specialist",
-    "Cloud Architect",
-    "Database Administrator",
-    "System Administrator",
-    "UI/UX Designer",
-    "API Developer",
-    "Mobile Developer",
-    "Software Engineer"
-  ];
+  // Fetch skills from GraphQL backend
+  const { data: skillsData } = useSkills();
+
+  // Extract skill titles for typewriter effect, with fallback
+  const skills = useMemo(() => {
+    return skillsData ? skillsData.map(skill => skill.title) : [
+      "Web Developer",
+      "Full-Stack Engineer", 
+      "DevOps Specialist",
+      "Cloud Architect",
+      "Software Engineer"
+    ];
+  }, [skillsData]);
 
   useEffect(() => {
     const currentSkill = skills[currentSkillIndex];
