@@ -21,8 +21,26 @@ export default function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    // TODO: Implement form submission logic
+    
+    // Basic form validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      alert('Please fill in all fields');
+      return;
+    }
+    
+    // Create mailto link for now (can be replaced with API call later)
+    const subject = `Portfolio Contact from ${formData.name}`;
+    const body = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`;
+    const mailtoLink = `mailto:your-email@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    window.open(mailtoLink);
+    
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      message: ''
+    });
   };
 
   return (
@@ -51,10 +69,10 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
                   Send Message
                 </h3>
-                <p className="text-accent-text text-sm">I'll get back to you as soon as possible</p>
+                <p className="text-accent-text text-sm">I&apos;ll get back to you as soon as possible</p>
               </div>
             </div>
 
@@ -131,7 +149,7 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
                   Contact Information
                 </h3>
                 <p className="text-accent-text text-sm">Reach out through any of these channels</p>
@@ -196,6 +214,7 @@ export default function ContactSection() {
                   href="https://github.com/mbaduko" 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  aria-label="Visit my GitHub profile"
                   className="w-12 h-12 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300"
                 >
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -206,6 +225,7 @@ export default function ContactSection() {
                   href="https://linkedin.com/in/mbaduko" 
                   target="_blank" 
                   rel="noopener noreferrer"
+                  aria-label="Visit my LinkedIn profile"
                   className="w-12 h-12 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300"
                 >
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -221,9 +241,9 @@ export default function ContactSection() {
         <div className="bg-gradient-to-r from-secondary-bg/70 to-secondary-bg/50 rounded-2xl p-8 border border-secondary-bg/40 text-center">
           <h3 className="text-xl font-bold text-foreground mb-4">Ready to Start a Project?</h3>
           <p className="text-accent-text mb-6 max-w-2xl mx-auto">
-            I'm always excited to work on new projects and collaborate with amazing teams. 
+            I&apos;m always excited to work on new projects and collaborate with amazing teams. 
             Whether you have a specific project in mind or just want to discuss possibilities, 
-            I'd love to hear from you.
+            I&apos;d love to hear from you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 

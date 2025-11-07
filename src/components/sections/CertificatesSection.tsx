@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useCertificates } from '@/lib/graphql/hooks';
@@ -200,11 +201,14 @@ export default function CertificatesSection() {
               <div className="flex items-start space-x-4">
                 {/* Certificate Logo */}
                 <div className="w-16 h-16 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20 flex-shrink-0">
-                  {!isImageError(cert.id) ? (
-                    <img
+                  {!isImageError(cert.id) && cert.logo ? (
+                    <Image
                       src={cert.logo}
                       alt={`${cert.issuer} logo`}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 object-contain"
+                      unoptimized={cert.logo?.includes('cloudinary.com') || cert.logo?.includes('google.com') || false}
                       onError={() => handleImageError(cert.id)}
                     />
                   ) : (

@@ -31,6 +31,7 @@ export default function Footer() {
                 href="https://twitter.com/mbaduko" 
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Follow me on Twitter"
                 className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -41,6 +42,7 @@ export default function Footer() {
                 href="https://linkedin.com/in/mbaduko" 
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Connect with me on LinkedIn"
                 className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -51,6 +53,7 @@ export default function Footer() {
                 href="https://github.com/mbaduko" 
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="View my GitHub profile"
                 className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">

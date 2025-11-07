@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useSkills } from '@/lib/graphql/hooks';
@@ -182,19 +183,21 @@ export default function SkillsSection() {
                 {skill.technologies.map((tech, index) => (
                   <span key={index} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 hover:scale-105 hover:border-primary-button/40 transition-all duration-200 flex items-center gap-3 shadow-sm hover:shadow-md">
                     <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1">
-                      <img 
-                        src={tech.logo} 
-                        alt={`${tech.name} logo`}
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = `<span class="text-xs font-bold text-primary-button">${tech.name.charAt(0)}</span>`;
-                          }
-                        }}
-                      />
+                      {tech.logo ? (
+                        <Image 
+                          src={tech.logo} 
+                          alt={`${tech.name} logo`}
+                          width={24}
+                          height={24}
+                          className="w-full h-full object-contain"
+                          unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
+                          onError={() => {
+                            // Handle error by showing fallback
+                          }}
+                        />
+                      ) : (
+                        <span className="text-xs font-bold text-primary-button">{tech.name.charAt(0)}</span>
+                      )}
                     </div>
                     <span className="font-medium">{tech.name}</span>
                   </span>

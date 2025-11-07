@@ -3,20 +3,26 @@
  * 
  * This utility helps check if the GraphQL backend is available
  * and provides debugging information for development.
+ * @module ServerHealth
  */
 
-/**
- * Function to check if GraphQL server is available and responsive
- */
-export const checkGraphQLServerHealth = async (): Promise<{
+interface ServerHealthResult {
   isAvailable: boolean;
   endpoint: string;
   error?: string;
-}> => {
+}
+
+/**
+ * Checks if GraphQL server is available and responsive
+ * @returns Promise with server health status, endpoint, and optional error message
+ */
+export const checkGraphQLServerHealth = async (): Promise<ServerHealthResult> => {
   const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_URI || 'http://localhost:4000/graphql';
   
   try {
-    console.log(`Checking GraphQL server health at: ${endpoint}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`Checking GraphQL server health at: ${endpoint}`);
+    }
     
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -29,11 +35,15 @@ export const checkGraphQLServerHealth = async (): Promise<{
     });
     
     if (response.ok) {
-      console.log('✅ GraphQL server is healthy and responding');
+      if (process.env.NODE_ENV === 'development') {
+        console.log('✅ GraphQL server is healthy and responding');
+      }
       return { isAvailable: true, endpoint };
     } else {
       const errorText = await response.text();
-      console.error(`❌ GraphQL server responded with error: ${response.status} ${response.statusText}`);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`❌ GraphQL server responded with error: ${response.status} ${response.statusText}`);
+      }
       return { 
         isAvailable: false, 
         endpoint, 
@@ -42,7 +52,9 @@ export const checkGraphQLServerHealth = async (): Promise<{
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error(`❌ Failed to connect to GraphQL server: ${errorMessage}`);
+    if (process.env.NODE_ENV === 'development') {
+      console.error(`❌ Failed to connect to GraphQL server: ${errorMessage}`);
+    }
     return { 
       isAvailable: false, 
       endpoint, 
@@ -53,7 +65,7 @@ export const checkGraphQLServerHealth = async (): Promise<{
 
 /**
  * Development helper to test GraphQL connectivity
- * Call this in development to verify backend connection
+ * Only runs in development mode to avoid production console output
  */
 export const testGraphQLConnection = async (): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {

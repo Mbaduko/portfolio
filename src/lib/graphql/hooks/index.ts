@@ -12,82 +12,28 @@ import {
   GET_CERTIFICATE_BY_ID,
   GET_PORTFOLIO_DATA
 } from '../queries';
+import type {
+  QueryResult,
+  BackendProject,
+  BackendTechnology,
+  BackendExperience,
+  BackendSkill,
+  BackendCertificate,
+  ProjectsResponse,
+  ProjectResponse
+} from '../types';
 
-// Backend API Types - matching the exact API response structure
-interface BackendTechnology {
-  id: string;
-  name: string;
-  logo: string;
-  level: number;
-  experience: string;
-  category: string;
-  createdAt: string;
-  updatedAt: string;
-}
+/**
+ * GraphQL hooks for fetching portfolio data
+ * @module GraphQLHooks
+ */
 
-interface BackendProject {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  role: string;
-  livelink: string;
-  githublink: string;
-  thumbnail: string;
-  technologies: BackendTechnology[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface BackendExperience {
-  id: string;
-  company: string;
-  companyLogo: string;
-  position: string;
-  location: string;
-  from: string;
-  to: string;
-  achievements: string[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface BackendSkill {
-  id: string;
-  title: string;
-  description: string;
-  technologies: BackendTechnology[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface BackendCertificate {
-  id: string;
-  title: string;
-  issuer: string;
-  category: 'COMPETITION' | 'ACADEMIC' | 'RECOGNITION';
-  priority: 'HIGH' | 'MEDIUM' | 'LOW';
-  issuedDate: string;
-  validUntil?: string;
-  credentialId: string;
-  logo: string;
-  description: string;
-  skills: string[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Hook return types with error handling
-interface QueryResult<T> {
-  data: T | undefined;
-  loading: boolean;
-  error: Error | undefined;
-  refetch: () => void;
-}
-
-// Project Hooks
+/**
+ * Fetches all projects from the GraphQL API
+ * @returns Query result with projects array, loading state, error, and refetch function
+ */
 export const useProjects = (): QueryResult<BackendProject[]> => {
-  const { data, loading, error, refetch } = useQuery<{ projects: BackendProject[] }>(GET_PROJECTS, {
+  const { data, loading, error, refetch } = useQuery<ProjectsResponse>(GET_PROJECTS, {
     errorPolicy: 'all',
     notifyOnNetworkStatusChange: true,
   });
@@ -100,8 +46,13 @@ export const useProjects = (): QueryResult<BackendProject[]> => {
   };
 };
 
+/**
+ * Fetches a single project by ID from the GraphQL API
+ * @param id - The project ID to fetch
+ * @returns Query result with project data, loading state, error, and refetch function
+ */
 export const useProjectById = (id: string): QueryResult<BackendProject> => {
-  const { data, loading, error, refetch } = useQuery<{ project: BackendProject }>(GET_PROJECT_BY_ID, {
+  const { data, loading, error, refetch } = useQuery<ProjectResponse>(GET_PROJECT_BY_ID, {
     variables: { id },
     skip: !id,
     errorPolicy: 'all',

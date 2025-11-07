@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useProjects } from '@/lib/graphql/hooks';
@@ -103,27 +104,23 @@ export default function ProjectsSection() {
 
                 {/* Thumbnail */}
                 <div className="relative h-48 bg-gradient-to-br from-secondary-bg/40 to-secondary-bg/20 overflow-hidden">
-                  <img 
-                    src={project.thumbnail} 
-                    alt={`${project.title} thumbnail`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `
-                          <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-20 h-20 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20 shadow-lg">
-                              <svg class="w-10 h-10 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
-                              </svg>
-                            </div>
-                          </div>
-                        `;
-                      }
-                    }}
-                  />
+                  {project.thumbnail ? (
+                    <Image 
+                      src={project.thumbnail} 
+                      alt={`${project.title} thumbnail`}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      unoptimized={project.thumbnail?.includes('cloudinary.com') || project.thumbnail?.includes('google.com') || false}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-20 h-20 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20 shadow-lg">
+                        <svg className="w-10 h-10 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
                   {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t from-secondary-bg/20 to-transparent"></div>
                 </div>
@@ -173,15 +170,18 @@ export default function ProjectsSection() {
                       {project.technologies.map((tech, index) => (
                         <span key={index} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-3 py-2 rounded-xl text-xs font-semibold border border-primary-button/25 hover:scale-105 hover:border-primary-button/40 transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md">
                           <div className="w-5 h-5 bg-white rounded-lg flex items-center justify-center p-0.5">
-                            {isImageError(`tech-${project.id}-${index}`) ? (
+                            {isImageError(`tech-${project.id}-${index}`) || !tech.logo ? (
                               <span className="text-xs font-bold text-primary-button">
                                 {tech.name.charAt(0)}
                               </span>
                             ) : (
-                              <img 
+                              <Image 
                                 src={tech.logo} 
                                 alt={`${tech.name} logo`}
+                                width={20}
+                                height={20}
                                 className="w-full h-full object-contain"
+                                unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
                                 onError={() => handleImageError(`tech-${project.id}-${index}`)}
                               />
                             )}

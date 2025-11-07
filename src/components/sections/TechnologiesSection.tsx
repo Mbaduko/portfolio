@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import Image from 'next/image';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useTechnologies, useExperiences } from '@/lib/graphql/hooks';
@@ -13,6 +14,56 @@ export default function TechnologiesSection() {
   
   // Fetch experiences for years calculation
   const { data: experiences } = useExperiences();
+
+  const handleImageError = useCallback((imageKey: string) => {
+    setImageErrors(prev => new Set(prev).add(imageKey));
+  }, []);
+
+  const isImageError = useCallback((imageKey: string) => {
+    return imageErrors.has(imageKey);
+  }, [imageErrors]);
+
+  const isValidImageUrl = useCallback((url: string | null | undefined) => {
+    if (!url || typeof url !== 'string') {
+      return false;
+    }
+    try {
+      const urlObj = new URL(url);
+      // Check if it's not a Google image search result
+      if (urlObj.hostname === 'www.google.com' && urlObj.pathname.includes('/imgres')) {
+        return false;
+      }
+      // Allow common image hosting domains
+      const allowedDomains = [
+        'images.seeklogo.com',
+        'cdn.jsdelivr.net',
+        'raw.githubusercontent.com',
+        'avatars.githubusercontent.com',
+        'upload.wikimedia.org',
+        'res.cloudinary.com',
+        'i.imgur.com',
+        'cdn.icon-icons.com',
+        'logos-world.net'
+      ];
+      return allowedDomains.some(domain => urlObj.hostname.includes(domain)) || 
+             urlObj.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  }, []);
+
+  // Group technologies from GraphQL backend by category
+  const groupedTechnologies = useMemo(() => {
+    if (!technologies) return {};
+    return technologies.reduce((acc, tech) => {
+      const category = tech.category || 'other';
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(tech);
+      return acc;
+    }, {} as Record<string, typeof technologies>);
+  }, [technologies]);
 
   // Handle loading state
   if (loading) {
@@ -43,16 +94,6 @@ export default function TechnologiesSection() {
       </SectionWrapper>
     );
   }
-
-  // Group technologies from GraphQL backend by category
-  const groupedTechnologies = technologies.reduce((acc, tech) => {
-    const category = tech.category || 'other';
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(tech);
-    return acc;
-  }, {} as Record<string, typeof technologies>);
 
   // Create category metadata dynamically from backend category names
   const getCategoryInfo = (category: string) => {
@@ -162,13 +203,7 @@ export default function TechnologiesSection() {
     };
   };
 
-  const handleImageError = (imageKey: string) => {
-    setImageErrors(prev => new Set(prev).add(imageKey));
-  };
 
-  const isImageError = (imageKey: string) => {
-    return imageErrors.has(imageKey);
-  };
 
   return (
     <SectionWrapper id="technologies" padding="lg" showBackground>
@@ -208,12 +243,15 @@ export default function TechnologiesSection() {
                     <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
                       {/* Technology Logo */}
                       <div className="w-10 h-10 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
-                        {!isImageError(`${categoryKey}-${tech.name}`) ? (
-                          <img 
+                        {!isImageError(`${categoryKey}-${tech.name}`) && tech.logo && isValidImageUrl(tech.logo) ? (
+                          <Image 
                             src={tech.logo} 
                             alt={`${tech.name} logo`}
+                            width={40}
+                            height={40}
                             className="w-full h-full object-contain"
                             onError={() => handleImageError(`${categoryKey}-${tech.name}`)}
+                            unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
                           />
                         ) : (
                           <div className="w-full h-full bg-gradient-to-br from-accent-text/20 to-accent-text/10 rounded flex items-center justify-center">
@@ -231,7 +269,12 @@ export default function TechnologiesSection() {
                         <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
                           <div 
                             className="h-full rounded-full bg-gradient-to-r from-primary-button/60 to-primary-button/40 transition-all duration-1000 ease-out"
-                            style={{ width: `${tech.level}%` }}
+                            data-level={tech.level}
+                            ref={(el) => {
+                              if (el) {
+                                el.style.width = `${tech.level}%`;
+                              }
+                            }}
                           ></div>
                         </div>
                       </div>
