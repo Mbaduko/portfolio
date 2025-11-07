@@ -56,13 +56,6 @@ export default function TechnologiesSection() {
 
   // Create category metadata dynamically from backend category names
   const getCategoryInfo = (category: string) => {
-    // Default icon for any category
-    const defaultIcon = (
-      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-        <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-      </svg>
-    );
-
     // Capitalize and format the category name from backend
     const formatCategoryTitle = (cat: string) => {
       return cat
@@ -76,10 +69,96 @@ export default function TechnologiesSection() {
       return `${formatCategoryTitle(cat)} technologies and tools`;
     };
 
+    // Get specific icon based on category keywords
+    const getCategoryIcon = (cat: string) => {
+      const lowerCat = cat.toLowerCase();
+      
+      // Frontend/UI related
+      if (lowerCat.includes('frontend') || lowerCat.includes('ui') || lowerCat.includes('client') || lowerCat.includes('web')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        );
+      }
+      
+      // Backend/Server related
+      if (lowerCat.includes('backend') || lowerCat.includes('server') || lowerCat.includes('api') || lowerCat.includes('service')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+          </svg>
+        );
+      }
+      
+      // Database related
+      if (lowerCat.includes('database') || lowerCat.includes('db') || lowerCat.includes('storage') || lowerCat.includes('data')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z" />
+            <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z" />
+            <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z" />
+          </svg>
+        );
+      }
+      
+      // DevOps/Cloud related
+      if (lowerCat.includes('devops') || lowerCat.includes('cloud') || lowerCat.includes('deploy') || lowerCat.includes('infrastructure') || lowerCat.includes('ops')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z" />
+          </svg>
+        );
+      }
+      
+      // Mobile related
+      if (lowerCat.includes('mobile') || lowerCat.includes('android') || lowerCat.includes('ios') || lowerCat.includes('app')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zM6 4a1 1 0 011-1h6a1 1 0 011 1v10a1 1 0 01-1 1H7a1 1 0 01-1-1V4zm4 12a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+          </svg>
+        );
+      }
+      
+      // Testing related
+      if (lowerCat.includes('test') || lowerCat.includes('qa') || lowerCat.includes('quality')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        );
+      }
+      
+      // Tools/Utilities related
+      if (lowerCat.includes('tool') || lowerCat.includes('util') || lowerCat.includes('framework') || lowerCat.includes('library')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+          </svg>
+        );
+      }
+      
+      // Design/Graphics related
+      if (lowerCat.includes('design') || lowerCat.includes('graphic') || lowerCat.includes('ui/ux') || lowerCat.includes('creative')) {
+        return (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+          </svg>
+        );
+      }
+      
+      // Default icon for unmatched categories
+      return (
+        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+        </svg>
+      );
+    };
+
     return {
       title: formatCategoryTitle(category),
       description: generateDescription(category),
-      icon: defaultIcon
+      icon: getCategoryIcon(category)
     };
   };
 
