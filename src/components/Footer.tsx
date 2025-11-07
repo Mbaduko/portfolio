@@ -1,4 +1,10 @@
+'use client';
+
+import { useSkills } from '@/lib/graphql/hooks';
+
 export default function Footer() {
+  const { data: skillsData } = useSkills();
+
   return (
     <footer className="bg-gradient-to-r from-background/95 to-background/90 border-t border-secondary-bg/30 py-12 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +24,7 @@ export default function Footer() {
             </div>
             <p className="text-accent-text text-sm leading-relaxed">
               Passionate software developer crafting digital solutions that make a difference. 
-              Let's build something amazing together.
+              Let&apos;s build something amazing together.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -95,24 +101,35 @@ export default function Footer() {
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-foreground">Services</h4>
             <ul className="space-y-3">
-              <li className="text-accent-text text-sm">
-                Web Development
-              </li>
-              <li className="text-accent-text text-sm">
-                Mobile Applications
-              </li>
-              <li className="text-accent-text text-sm">
-                API Development
-              </li>
-              <li className="text-accent-text text-sm">
-                Database Design
-              </li>
-              <li className="text-accent-text text-sm">
-                DevOps & CI/CD
-              </li>
-              <li className="text-accent-text text-sm">
-                System Administration
-              </li>
+              {skillsData && skillsData.length > 0 ? (
+                skillsData.slice(0, 6).map((skill, index) => (
+                  <li key={skill.id || index} className="text-accent-text text-sm">
+                    {skill.title}
+                  </li>
+                ))
+              ) : (
+                // Fallback skills if backend is unavailable
+                <>
+                  <li className="text-accent-text text-sm">
+                    Web Development
+                  </li>
+                  <li className="text-accent-text text-sm">
+                    Mobile Applications
+                  </li>
+                  <li className="text-accent-text text-sm">
+                    API Development
+                  </li>
+                  <li className="text-accent-text text-sm">
+                    Database Design
+                  </li>
+                  <li className="text-accent-text text-sm">
+                    DevOps & CI/CD
+                  </li>
+                  <li className="text-accent-text text-sm">
+                    System Administration
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
