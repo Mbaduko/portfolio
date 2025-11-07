@@ -23,3 +23,58 @@ body {
   color: var(--foreground);
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
 }
+
+/* Custom scrollbar: hidden by default, visible when scrolling or on hover
+   Works across WebKit browsers (Chrome, Edge, Safari) and Firefox.
+   - WebKit: control width and thumb opacity
+   - Firefox: use scrollbar-color and scrollbar-width
+   We toggle the `scrolling` class on the root element while the user scrolls (see Providers.tsx)
+*/
+
+:root {
+  --scrollbar-width: 12px; /* target thickness for WebKit */
+  --scrollbar-thumb: rgba(10, 128, 237, 0.75);
+  --scrollbar-thumb-hover: rgba(10, 128, 237, 0.95);
+}
+
+/* Firefox: hide by default (transparent), show colored thumb when html has .scrolling */
+* {
+  scrollbar-width: none; /* hide by default in Firefox */
+  scrollbar-color: transparent transparent;
+}
+
+html.scrolling * {
+  scrollbar-width: auto; /* allow thicker native thumb in Firefox when scrolling */
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* WebKit browsers */
+*::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  border: 3px solid transparent; /* gives some padding effect */
+  background-clip: padding-box;
+  opacity: 0; /* hidden by default */
+  transition: opacity 200ms ease, background 120ms ease;
+}
+
+/* show when user is actively scrolling or when element is hovered */
+html.scrolling *::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb {
+  opacity: 1;
+}
+
+/* improve visibility on hover */
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-hover);
+}
+
