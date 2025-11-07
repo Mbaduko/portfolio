@@ -1,8 +1,59 @@
 'use client';
 
 import SectionWrapper from '@/components/ui/SectionWrapper';
+import { useProjects, useExperiences, useTechnologies } from '@/lib/graphql/hooks';
 
 export default function HeroBioSection() {
+  // Fetch data from GraphQL backend
+  const { data: projects } = useProjects();
+  const { data: experiences } = useExperiences();
+  const { data: technologies } = useTechnologies();
+
+  // Calculate dynamic stats
+  const calculateYearsExperience = () => {
+    if (!experiences || experiences.length === 0) return '3+';
+    
+    const currentYear = new Date().getFullYear();
+    
+    // Find the earliest start year from all experiences
+    const startYears = experiences.map(exp => new Date(exp.from).getFullYear());
+    const earliestYear = Math.min(...startYears);
+    
+    // Calculate total years from earliest start to current year
+    const totalYears = currentYear - earliestYear;
+    return `${totalYears}+`;
+  };
+
+  const calculateProjectsCount = () => {
+    if (!projects || projects.length === 0) return '25+';
+    return `${projects.length}+`;
+  };
+
+  const calculateTechnologiesCount = () => {
+    if (!technologies || technologies.length === 0) return '15+';
+    return `${technologies.length}+`;
+  };
+
+  const calculateAverageSkill = () => {
+    if (!technologies || technologies.length === 0) return '100';
+    
+    const validLevels = technologies
+      .map(tech => {
+        let level = tech.level;
+        if (typeof level === 'string') {
+          level = parseFloat(level);
+        }
+        const numLevel = Number(level);
+        return (!isNaN(numLevel) && numLevel >= 0 && numLevel <= 100) ? numLevel : null;
+      })
+      .filter(level => level !== null) as number[];
+    
+    if (validLevels.length === 0) return '100';
+    
+    const average = validLevels.reduce((acc, level) => acc + level, 0) / validLevels.length;
+    return Math.round(average).toString();
+  };
+
   const expertise = [
     { 
       title: "Backend Development", 
@@ -176,7 +227,7 @@ export default function HeroBioSection() {
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
               </svg>
             </div>
-            <div className="text-xl font-bold text-primary-button mb-1">3+</div>
+            <div className="text-xl font-bold text-primary-button mb-1">{calculateYearsExperience()}</div>
             <div className="text-accent-text text-xs font-medium">Years Experience</div>
           </div>
           <div 
@@ -188,7 +239,7 @@ export default function HeroBioSection() {
                 <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
             </div>
-            <div className="text-xl font-bold text-primary-button mb-1">25+</div>
+            <div className="text-xl font-bold text-primary-button mb-1">{calculateProjectsCount()}</div>
             <div className="text-accent-text text-xs font-medium">Projects Completed</div>
           </div>
           <div 
@@ -200,7 +251,7 @@ export default function HeroBioSection() {
                 <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
               </svg>
             </div>
-            <div className="text-xl font-bold text-primary-button mb-1">15+</div>
+            <div className="text-xl font-bold text-primary-button mb-1">{calculateTechnologiesCount()}</div>
             <div className="text-accent-text text-xs font-medium">Technologies Mastered</div>
           </div>
           <div 
@@ -212,8 +263,8 @@ export default function HeroBioSection() {
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
-            <div className="text-xl font-bold text-primary-button mb-1">100%</div>
-            <div className="text-accent-text text-xs font-medium">Client Satisfaction</div>
+            <div className="text-xl font-bold text-primary-button mb-1">{calculateAverageSkill()}%</div>
+            <div className="text-accent-text text-xs font-medium">Average Skill</div>
           </div>
         </div>
       </div>

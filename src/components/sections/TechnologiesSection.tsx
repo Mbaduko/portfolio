@@ -3,13 +3,16 @@
 import { useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { useTechnologies } from '@/lib/graphql/hooks';
+import { useTechnologies, useExperiences } from '@/lib/graphql/hooks';
 
 export default function TechnologiesSection() {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
   // Fetch technologies from GraphQL backend
   const { data: technologies, loading, error } = useTechnologies();
+  
+  // Fetch experiences for years calculation
+  const { data: experiences } = useExperiences();
 
   // Handle loading state
   if (loading) {
@@ -236,10 +239,17 @@ export default function TechnologiesSection() {
               </div>
               <div className="text-2xl font-bold text-primary-button mb-1">
                 {(() => {
-                  const years = technologies
-                    .map(tech => tech.experience ? parseInt(tech.experience.match(/(\d+)/)?.[0] || '0') : 0)
-                    .filter(year => year > 0);
-                  return years.length > 0 ? Math.max(...years) : '3+';
+                  if (!experiences || experiences.length === 0) return '3+';
+                  
+                  const currentYear = new Date().getFullYear();
+                  
+                  // Find the earliest start year from all experiences
+                  const startYears = experiences.map(exp => new Date(exp.from).getFullYear());
+                  const earliestYear = Math.min(...startYears);
+                  
+                  // Calculate total years from earliest start to current year
+                  const totalYears = currentYear - earliestYear;
+                  return `${totalYears}+`;
                 })()}
               </div>
               <div className="text-accent-text text-sm font-medium">Years Experience</div>
