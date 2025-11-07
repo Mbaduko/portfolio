@@ -198,18 +198,7 @@ export default function Footer() {
               </p>
             </div>
 
-            {/* Additional Links */}
-            <div className="flex space-x-6">
-              <a href="#" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
-                Terms of Service
-              </a>
-              <a href="#" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
-                Sitemap
-              </a>
-            </div>
+            {/* Additional Links removed per request (privacy/terms/sitemap) */}
           </div>
         </div>
       </div>

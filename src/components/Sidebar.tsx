@@ -15,18 +15,25 @@ export default function Sidebar() {
 
   // Extract skill titles for typewriter effect, with fallback
   const skills = useMemo(() => {
-    return skillsData ? skillsData.map(skill => skill.title) : [
-      "Web Developer",
-      "Full-Stack Engineer", 
-      "DevOps Specialist",
-      "Cloud Architect",
-      "Software Engineer"
+    const fallback = [
+      'Web Developer',
+      'Full-Stack Engineer',
+      'DevOps Specialist',
+      'Cloud Architect',
+      'Software Engineer',
     ];
+
+    // If skillsData is an array with items, map titles. Otherwise use fallback.
+    if (Array.isArray(skillsData) && skillsData.length > 0) {
+      return skillsData.map((skill) => skill?.title ?? '').filter(Boolean);
+    }
+
+    return fallback;
   }, [skillsData]);
 
   useEffect(() => {
-    const currentSkill = skills[currentSkillIndex];
-    
+    const currentSkill = (skills && skills[currentSkillIndex]) || '';
+
     if (!isDeleting) {
       // Typing effect
       if (currentText.length < currentSkill.length) {
@@ -52,9 +59,12 @@ export default function Sidebar() {
         }, typingSpeed);
         return () => clearTimeout(timeout);
       } else {
-        // Move to next skill
+        // Move to next skill — guard against zero-length skills array
         setIsDeleting(false);
-        setCurrentSkillIndex((prevIndex) => (prevIndex + 1) % skills.length);
+        setCurrentSkillIndex((prevIndex) => {
+          const len = skills.length || 1; // avoid modulo 0
+          return (prevIndex + 1) % len;
+        });
         setTypingSpeed(100);
       }
     }
