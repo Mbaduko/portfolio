@@ -168,8 +168,8 @@ export default function TechnologiesSection() {
           })}
         </div>
 
-        {/* Summary Stats */}
-                 <div className="bg-gradient-to-r from-secondary-bg/70 to-secondary-bg/50 rounded-2xl p-8 border border-secondary-bg/40">
+        {/* Summary Stats - Dynamic from Backend Data */}
+        <div className="bg-gradient-to-r from-secondary-bg/70 to-secondary-bg/50 rounded-2xl p-8 border border-secondary-bg/40">
           <h3 className="text-xl font-bold text-foreground mb-6 text-center">Technology Summary</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
@@ -178,7 +178,7 @@ export default function TechnologiesSection() {
                   <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
               </div>
-              <div className="text-2xl font-bold text-primary-button mb-1">20+</div>
+              <div className="text-2xl font-bold text-primary-button mb-1">{technologies.length}</div>
               <div className="text-accent-text text-sm font-medium">Technologies</div>
             </div>
             <div className="text-center">
@@ -187,7 +187,34 @@ export default function TechnologiesSection() {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
-              <div className="text-2xl font-bold text-primary-button mb-1">87%</div>
+              <div className="text-2xl font-bold text-primary-button mb-1">
+                {(() => {
+                  if (technologies.length === 0) return '0';
+                  
+                  const validLevels = technologies
+                    .map(tech => {
+                      // Handle various formats that might come from backend
+                      let level = tech.level;
+                      
+                      // If it's a string, try to parse it
+                      if (typeof level === 'string') {
+                        level = parseFloat(level);
+                      }
+                      
+                      // Convert to number and validate
+                      const numLevel = Number(level);
+                      
+                      // Only accept valid percentages (0-100)
+                      return (!isNaN(numLevel) && numLevel >= 0 && numLevel <= 100) ? numLevel : null;
+                    })
+                    .filter(level => level !== null) as number[];
+                  
+                  if (validLevels.length === 0) return '0';
+                  
+                  const average = validLevels.reduce((acc, level) => acc + level, 0) / validLevels.length;
+                  return Math.round(average);
+                })()}%
+              </div>
               <div className="text-accent-text text-sm font-medium">Average Skill</div>
             </div>
             <div className="text-center">
@@ -196,7 +223,9 @@ export default function TechnologiesSection() {
                   <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
                 </svg>
               </div>
-              <div className="text-2xl font-bold text-primary-button mb-1">4</div>
+              <div className="text-2xl font-bold text-primary-button mb-1">
+                {Object.keys(groupedTechnologies).length}
+              </div>
               <div className="text-accent-text text-sm font-medium">Categories</div>
             </div>
             <div className="text-center">
@@ -205,7 +234,14 @@ export default function TechnologiesSection() {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </div>
-              <div className="text-2xl font-bold text-primary-button mb-1">3+</div>
+              <div className="text-2xl font-bold text-primary-button mb-1">
+                {(() => {
+                  const years = technologies
+                    .map(tech => tech.experience ? parseInt(tech.experience.match(/(\d+)/)?.[0] || '0') : 0)
+                    .filter(year => year > 0);
+                  return years.length > 0 ? Math.max(...years) : '3+';
+                })()}
+              </div>
               <div className="text-accent-text text-sm font-medium">Years Experience</div>
             </div>
           </div>
