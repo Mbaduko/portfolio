@@ -3,229 +3,71 @@
 import { useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useProjects } from '@/lib/graphql/hooks';
 
 export default function ProjectsSection() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description: "Full-stack e-commerce platform with authentication, payment integration, and admin dashboard.",
-      status: "Live",
-      role: "Full Stack Developer",
-      owner: "Personal Project",
-      liveLink: "https://ecommerce-demo.com",
-      githubLink: "https://github.com/mbaduko/ecommerce-platform",
-      thumbnail: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-        { name: "Stripe", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" },
-        { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" }
-      ]
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description: "Collaborative task management with real-time updates, kanban boards, and team collaboration.",
-      status: "Live",
-      role: "Backend Developer",
-      owner: "Company Project",
-      liveLink: "https://taskmanager-demo.com",
-      githubLink: "https://github.com/mbaduko/task-manager",
-      thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-        { name: "Socket.io", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg" },
-        { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" }
-      ]
-    },
-    {
-      id: 3,
-      title: "API Gateway",
-      description: "Microservices API gateway with authentication, rate limiting, and service discovery.",
-      status: "In Development",
-      role: "DevOps Engineer",
-      owner: "Personal Project",
-      liveLink: null,
-      githubLink: "https://github.com/mbaduko/api-gateway",
-      thumbnail: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-        { name: "Kubernetes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" },
-        { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" },
-        { name: "Nginx", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" },
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" }
-      ]
-    },
-    {
-      id: 4,
-      title: "DevOps Pipeline",
-      description: "Automated CI/CD pipeline with testing, security scanning, and monitoring dashboards.",
-      status: "Live",
-      role: "DevOps Engineer",
-      owner: "Client Project",
-      liveLink: "https://pipeline-demo.com",
-      githubLink: "https://github.com/mbaduko/devops-pipeline",
-      thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Jenkins", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" },
-        { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" },
-        { name: "Terraform", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" },
-        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-        { name: "Prometheus", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original.svg" }
-      ]
-    },
-    {
-      id: 5,
-      title: "Social Media Dashboard",
-      description: "Analytics dashboard for social media management with real-time metrics and reporting.",
-      status: "Live",
-      role: "Frontend Developer",
-      owner: "Client Project",
-      liveLink: "https://social-dashboard.com",
-      githubLink: "https://github.com/mbaduko/social-dashboard",
-      thumbnail: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-        { name: "Chart.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chartjs/chartjs-original.svg" },
-        { name: "Firebase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
-        { name: "Material-UI", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg" }
-      ]
-    },
-    {
-      id: 6,
-      title: "Inventory Management System",
-      description: "Comprehensive inventory tracking system with barcode scanning and automated alerts.",
-      status: "Live",
-      role: "Full Stack Developer",
-      owner: "Company Project",
-      liveLink: "https://inventory-system.com",
-      githubLink: "https://github.com/mbaduko/inventory-system",
-      thumbnail: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Vue.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
-        { name: "Laravel", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-plain.svg" },
-        { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-        { name: "WebRTC", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/webrtc/webrtc-original.svg" },
-        { name: "Bootstrap", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" }
-      ]
-    },
-    {
-      id: 7,
-      title: "Real-time Chat Application",
-      description: "Instant messaging app with file sharing, voice messages, and group chat functionality.",
-      status: "Live",
-      role: "Backend Developer",
-      owner: "Personal Project",
-      liveLink: "https://chat-app.com",
-      githubLink: "https://github.com/mbaduko/chat-app",
-      thumbnail: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Socket.io", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg" },
-        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-        { name: "JWT", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jwt/jwt-original.svg" },
-        { name: "Multer", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/multer/multer-original.svg" }
-      ]
-    },
-    {
-      id: 8,
-      title: "Weather Forecast App",
-      description: "Weather application with location-based forecasts, radar maps, and severe weather alerts.",
-      status: "Live",
-      role: "Frontend Developer",
-      owner: "Personal Project",
-      liveLink: "https://weather-app.com",
-      githubLink: "https://github.com/mbaduko/weather-app",
-      thumbnail: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "React Native", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Expo", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/expo/expo-original.svg" },
-        { name: "OpenWeather API", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openweather/openweather-original.svg" },
-        { name: "AsyncStorage", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/asyncstorage/asyncstorage-original.svg" },
-        { name: "React Navigation", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/reactnavigation/reactnavigation-original.svg" }
-      ]
-    },
-    {
-      id: 9,
-      title: "Restaurant Management System",
-      description: "Complete restaurant management solution with order tracking, menu management, and POS integration.",
-      status: "In Development",
-      role: "Full Stack Developer",
-      owner: "Client Project",
-      liveLink: null,
-      githubLink: "https://github.com/mbaduko/restaurant-system",
-      thumbnail: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Angular", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" },
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { name: "Stripe", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" },
-        { name: "Socket.io", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg" }
-      ]
-    },
-    {
-      id: 10,
-      title: "Learning Management System",
-      description: "Educational platform with course creation, student progress tracking, and interactive assessments.",
-      status: "Live",
-      role: "Backend Developer",
-      owner: "Company Project",
-      liveLink: "https://lms-platform.com",
-      githubLink: "https://github.com/mbaduko/lms-platform",
-      thumbnail: "https://images.unsplash.com/photo-1523240794102-9ebd0b167f70?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-        { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { name: "Celery", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/celery/celery-original.svg" },
-        { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" }
-      ]
-    },
-    {
-      id: 11,
-      title: "Cryptocurrency Tracker",
-      description: "Real-time cryptocurrency price tracking with portfolio management and market analysis tools.",
-      status: "Live",
-      role: "Full Stack Developer",
-      owner: "Personal Project",
-      liveLink: "https://crypto-tracker.com",
-      githubLink: "https://github.com/mbaduko/crypto-tracker",
-      thumbnail: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
-        { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-        { name: "CoinGecko API", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/coingecko/coingecko-original.svg" },
-        { name: "Chart.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chartjs/chartjs-original.svg" },
-        { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" }
-      ]
-    },
-    {
-      id: 12,
-      title: "Fitness Tracking App",
-      description: "Comprehensive fitness tracking application with workout planning, progress monitoring, and social features.",
-      status: "Live",
-      role: "Mobile Developer",
-      owner: "Client Project",
-      liveLink: "https://fitness-app.com",
-      githubLink: "https://github.com/mbaduko/fitness-app",
-      thumbnail: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&crop=center",
-      technologies: [
-        { name: "React Native", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Firebase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
-        { name: "Redux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" },
-        { name: "HealthKit", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/healthkit/healthkit-original.svg" },
-        { name: "Expo", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/expo/expo-original.svg" }
-      ]
-    }
-  ];
+  // Fetch projects from backend GraphQL API
+  const { data: projects, loading, error, refetch } = useProjects();
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <SectionWrapper id="projects">
+        <SectionHeader 
+          title="Featured Projects" 
+          subtitle="A showcase of my work and contributions"
+        />
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          <span className="ml-4 text-muted-foreground">Loading projects...</span>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <SectionWrapper id="projects">
+        <SectionHeader 
+          title="Featured Projects" 
+          subtitle="A showcase of my work and contributions"
+        />
+        <div className="text-center py-20">
+          <div className="text-red-500 mb-4">
+            Failed to load projects: {error.message}
+          </div>
+          <button 
+            onClick={() => refetch()} 
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+          >
+            Try Again
+          </button>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Handle no data state
+  if (!projects || projects.length === 0) {
+    return (
+      <SectionWrapper id="projects">
+        <SectionHeader 
+          title="Featured Projects" 
+          subtitle="A showcase of my work and contributions"
+        />
+        <div className="text-center py-20">
+          <p className="text-muted-foreground">No projects available at the moment.</p>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Now use data from GraphQL backend
+  const displayedProjects = showAllProjects ? projects : projects.slice(0, 4);
 
   const handleImageError = (imageKey: string) => {
     setImageErrors(prev => new Set(prev).add(imageKey));
@@ -250,7 +92,7 @@ export default function ProjectsSection() {
       
       <div className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {(showAllProjects ? projects : projects.slice(0, 4)).map((project) => (
+          {displayedProjects.map((project) => (
             <div key={project.id} className="group relative">
               <div className="bg-gradient-to-br from-secondary-bg/60 to-secondary-bg/30 rounded-2xl border border-secondary-bg/30 overflow-hidden hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl group-hover:scale-[1.02]">
                 {/* Background decoration */}
@@ -290,7 +132,7 @@ export default function ProjectsSection() {
                 <div className="p-6 relative">
                   {/* Title and Status */}
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                    <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
                       {project.title}
                     </h3>
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${
@@ -307,15 +149,15 @@ export default function ProjectsSection() {
                     {project.description}
                   </p>
 
-                  {/* Role and Owner */}
+                  {/* Role and Status */}
                   <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="bg-secondary-bg/30 p-3 rounded-lg border border-secondary-bg/20">
                       <span className="text-xs text-accent-text uppercase tracking-wide block mb-1">Role</span>
                       <p className="text-foreground text-sm font-semibold">{project.role}</p>
                     </div>
                     <div className="bg-secondary-bg/30 p-3 rounded-lg border border-secondary-bg/20">
-                      <span className="text-xs text-accent-text uppercase tracking-wide block mb-1">Owner</span>
-                      <p className="text-foreground text-sm font-semibold">{project.owner}</p>
+                      <span className="text-xs text-accent-text uppercase tracking-wide block mb-1">Status</span>
+                      <p className="text-foreground text-sm font-semibold">{project.status}</p>
                     </div>
                   </div>
 
@@ -352,9 +194,9 @@ export default function ProjectsSection() {
 
                   {/* Action Buttons */}
                   <div className="flex gap-3">
-                    {project.liveLink && (
+                    {project.livelink && (
                       <a 
-                        href={project.liveLink}
+                        href={project.livelink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 bg-gradient-to-r from-primary-button to-primary-button/90 text-white px-4 py-3 rounded-xl text-sm font-semibold hover:from-primary-button/90 hover:to-primary-button/80 transition-all duration-300 text-center shadow-lg hover:shadow-xl transform hover:scale-105"
@@ -367,9 +209,9 @@ export default function ProjectsSection() {
                         </div>
                       </a>
                     )}
-                    {project.githubLink && (
+                    {project.githublink && (
                       <a 
-                        href={project.githubLink}
+                        href={project.githublink}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 bg-gradient-to-r from-secondary-bg/50 to-secondary-bg/30 text-foreground px-4 py-3 rounded-xl text-sm font-semibold hover:from-secondary-bg/70 hover:to-secondary-bg/50 transition-all duration-300 text-center border border-secondary-bg/30 hover:border-primary-button/30 shadow-lg hover:shadow-xl transform hover:scale-105"

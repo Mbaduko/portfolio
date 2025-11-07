@@ -3,103 +3,53 @@
 import { useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useExperiences } from '@/lib/graphql/hooks';
 
 export default function ExperienceSection() {
-  const [expandedItems, setExpandedItems] = useState<number[]>([]);
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
-  const experiences = [
-    {
-      id: 1,
-      company: "TechCorp Solutions",
-      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg",
-      position: "Senior Full Stack Developer",
-      location: "Kigali, Rwanda",
-      duration: "Jan 2023 - Present",
-      shortDescription: "Leading development of enterprise web applications using React, Node.js, and PostgreSQL.",
-      fullDescription: "Leading development of enterprise web applications using React, Node.js, and PostgreSQL. Mentoring junior developers and implementing CI/CD pipelines.",
-      technologies: [
-        { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
-        { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg" }
-      ],
-      achievements: [
-        "Reduced application load time by 40% through optimization",
-        "Led a team of 5 developers on a major client project",
-        "Implemented automated testing increasing coverage to 85%"
-      ]
-    },
-    {
-      id: 2,
-      company: "Digital Innovations Ltd",
-      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoft/microsoft-original.svg",
-      position: "Backend Developer",
-      location: "Remote",
-      duration: "Mar 2022 - Dec 2022",
-      shortDescription: "Developed RESTful APIs and microservices using Python, Django, and MongoDB.",
-      fullDescription: "Developed RESTful APIs and microservices using Python, Django, and MongoDB. Collaborated with frontend team to ensure seamless integration.",
-      technologies: [
-        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
-        { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" },
-        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
-        { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg" },
-        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" }
-      ],
-      achievements: [
-        "Built 15+ REST APIs serving 10,000+ daily requests",
-        "Implemented caching strategy reducing database queries by 60%",
-        "Designed database schema for a new e-commerce platform"
-      ]
-    },
-    {
-      id: 3,
-      company: "StartupHub",
-      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg",
-      position: "Junior Developer",
-      location: "Kigali, Rwanda",
-      duration: "Jun 2021 - Feb 2022",
-      shortDescription: "Contributed to various web development projects using modern JavaScript frameworks.",
-      fullDescription: "Contributed to various web development projects using modern JavaScript frameworks. Participated in code reviews and agile development processes.",
-      technologies: [
-        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "Vue.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
-        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
-        { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
-        { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" }
-      ],
-      achievements: [
-        "Developed 3 client websites from concept to deployment",
-        "Improved code quality through peer code reviews",
-        "Learned modern development practices and tools"
-      ]
-    },
-    {
-      id: 4,
-      company: "Freelance Developer",
-      companyLogo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazon/amazon-original.svg",
-      position: "Web Developer",
-      location: "Remote",
-      duration: "Jan 2021 - May 2021",
-      shortDescription: "Worked with various clients to build custom websites and web applications.",
-      fullDescription: "Worked with various clients to build custom websites and web applications. Managed project timelines and client communications.",
-      technologies: [
-        { name: "HTML", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-        { name: "CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
-        { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { name: "PHP", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
-        { name: "WordPress", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" }
-      ],
-      achievements: [
-        "Completed 8 client projects successfully",
-        "Built responsive websites for small businesses",
-        "Developed custom WordPress themes and plugins"
-      ]
-    }
-  ];
+  // Fetch experiences from GraphQL backend
+  const { data: experiences, loading, error } = useExperiences();
 
-  const toggleExpanded = (id: number) => {
+  // Handle loading state
+  if (loading) {
+    return (
+      <SectionWrapper id="experience" padding="lg" showBackground>
+        <SectionHeader
+          title="Professional Experience"
+          subtitle="My journey and roles"
+        />
+        <div className="text-center py-20">
+          <p className="text-muted-foreground">Loading experiences...</p>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Handle error state
+  if (error || !experiences) {
+    return (
+      <SectionWrapper id="experience" padding="lg" showBackground>
+        <SectionHeader
+          title="Professional Experience"
+          subtitle="My journey and roles"
+        />
+        <div className="text-center py-20">
+          <p className="text-muted-foreground">Unable to load experiences at the moment.</p>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Helper function to format date range
+  const formatDateRange = (from: string, to: string) => {
+    const fromDate = new Date(from).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    const toDate = to ? new Date(to).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Present';
+    return `${fromDate} - ${toDate}`;
+  };
+
+  const toggleExpanded = (id: string) => {
     setExpandedItems(prev =>
       prev.includes(id)
         ? prev.filter(item => item !== id)
@@ -157,7 +107,7 @@ export default function ExperienceSection() {
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
                   <div className="space-y-3">
-                    <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                    <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
                       {experience.position}
                     </h3>
                     <div className="flex items-center space-x-3">
@@ -187,7 +137,7 @@ export default function ExperienceSection() {
                   </div>
                   <div className="mt-4 sm:mt-0 flex items-center space-x-4">
                     <span className="bg-gradient-to-r from-primary-button/20 to-primary-button/10 text-primary-button px-4 py-2 rounded-full text-sm font-semibold border border-primary-button/20 shadow-sm hover:shadow-md transition-all duration-300">
-                      {experience.duration}
+                      {formatDateRange(experience.from, experience.to)}
                     </span>
                     <button
                       onClick={() => toggleExpanded(experience.id)}
@@ -207,49 +157,7 @@ export default function ExperienceSection() {
                   </div>
                 </div>
 
-                {/* Description */}
-                <div className="relative">
-                  <p className="text-accent-text text-base leading-relaxed mb-6">
-                    {expandedItems.includes(experience.id) ? experience.fullDescription : experience.shortDescription}
-                  </p>
-                  {!expandedItems.includes(experience.id) && (
-                    <div className="absolute bottom-0 right-0 w-16 h-8 bg-gradient-to-l from-secondary-bg/60 to-transparent"></div>
-                  )}
-
-                </div>
-
-                {/* Technologies - Show only when expanded */}
-                {expandedItems.includes(experience.id) && (
-                  <div className="mb-6">
-                    <h4 className="text-base font-semibold text-foreground mb-4 flex items-center space-x-2">
-                      <svg className="w-5 h-5 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                      </svg>
-                      <span>Technologies Used</span>
-                    </h4>
-                    <div className="flex flex-wrap gap-3">
-                      {experience.technologies.map((tech, techIndex) => (
-                        <span key={techIndex} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 hover:scale-105 hover:border-primary-button/40 transition-all duration-200 flex items-center gap-3 shadow-sm hover:shadow-md">
-                          <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1">
-                            {isImageError(`tech-${experience.id}-${techIndex}`) ? (
-                              <span className="text-xs font-bold text-primary-button">
-                                {tech.name.charAt(0)}
-                              </span>
-                            ) : (
-                              <img 
-                                src={tech.logo} 
-                                alt={`${tech.name} logo`}
-                                className="w-full h-full object-contain"
-                                onError={() => handleImageError(`tech-${experience.id}-${techIndex}`)}
-                              />
-                            )}
-                          </div>
-                          <span className="font-medium">{tech.name}</span>
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                {/* No description available from backend - only show achievements when expanded */}
 
                 {/* Key Achievements - Show only when expanded */}
                 {expandedItems.includes(experience.id) && (

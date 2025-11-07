@@ -3,80 +3,115 @@
 import { useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { useTechnologies } from '@/lib/graphql/hooks';
 
 export default function TechnologiesSection() {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
-  const technologyCategories = [
-    {
-      id: 1,
-      title: "Frontend Development",
-      description: "Modern web technologies and frameworks",
-      icon: (
-        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-        </svg>
-      ),
-      technologies: [
-        { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", level: 95, experience: "3+ years" },
-        { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", level: 90, experience: "2+ years" },
-        { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", level: 85, experience: "2+ years" },
-        { name: "Tailwind CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg", level: 95, experience: "3+ years" },
-        { name: "Vue.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg", level: 80, experience: "2+ years" }
-      ]
-    },
-    {
-      id: 2,
-      title: "Backend Development",
-      description: "Server-side technologies and APIs",
-      icon: (
-        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-        </svg>
-      ),
-      technologies: [
-        { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", level: 95, experience: "3+ years" },
-        { name: "Express.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg", level: 90, experience: "3+ years" },
-        { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", level: 85, experience: "2+ years" },
-        { name: "Django", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg", level: 80, experience: "2+ years" },
-        { name: "Socket.io", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg", level: 85, experience: "2+ years" }
-      ]
-    },
-    {
-      id: 3,
-      title: "Database & Storage",
-      description: "Data management and persistence solutions",
-      icon: (
-        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-        </svg>
-      ),
-      technologies: [
-        { name: "MongoDB", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg", level: 90, experience: "3+ years" },
-        { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", level: 85, experience: "2+ years" },
-        { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", level: 80, experience: "2+ years" },
-        { name: "Redis", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg", level: 85, experience: "2+ years" },
-        { name: "Firebase", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg", level: 80, experience: "2+ years" }
-      ]
-    },
-    {
-      id: 4,
-      title: "DevOps & Cloud",
-      description: "Infrastructure and deployment technologies",
-      icon: (
-        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-          <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clipRule="evenodd" />
-        </svg>
-      ),
-      technologies: [
-        { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", level: 90, experience: "3+ years" },
-        { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", level: 85, experience: "2+ years" },
-        { name: "Kubernetes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg", level: 80, experience: "2+ years" },
-        { name: "Linux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", level: 90, experience: "3+ years" },
-        { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", level: 95, experience: "3+ years" }
-      ]
+  // Fetch technologies from GraphQL backend
+  const { data: technologies, loading, error } = useTechnologies();
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <SectionWrapper id="technologies" padding="lg" showBackground>
+        <SectionHeader
+          title="Technologies"
+          subtitle="Tools and frameworks I work with"
+        />
+        <div className="text-center py-20">
+          <p className="text-muted-foreground">Loading technologies...</p>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Handle error state
+  if (error || !technologies) {
+    return (
+      <SectionWrapper id="technologies" padding="lg" showBackground>
+        <SectionHeader
+          title="Technologies"
+          subtitle="Tools and frameworks I work with"
+        />
+        <div className="text-center py-20">
+          <p className="text-muted-foreground">Unable to load technologies at the moment.</p>
+        </div>
+      </SectionWrapper>
+    );
+  }
+
+  // Group technologies from GraphQL backend by category
+  const groupedTechnologies = technologies.reduce((acc, tech) => {
+    const category = tech.category || 'other';
+    if (!acc[category]) {
+      acc[category] = [];
     }
-  ];
+    acc[category].push(tech);
+    return acc;
+  }, {} as Record<string, typeof technologies>);
+
+  // Create category metadata
+  const getCategoryInfo = (category: string) => {
+    const categoryMap: Record<string, { title: string; description: string; icon: JSX.Element }> = {
+      frontend: {
+        title: "Frontend Development",
+        description: "Modern web technologies and frameworks",
+        icon: (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        )
+      },
+      backend: {
+        title: "Backend Development",
+        description: "Server-side technologies and APIs",
+        icon: (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+          </svg>
+        )
+      },
+      database: {
+        title: "Database & Storage",
+        description: "Data management and persistence solutions",
+        icon: (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+          </svg>
+        )
+      },
+      devops: {
+        title: "DevOps & Cloud",
+        description: "Infrastructure and deployment technologies",
+        icon: (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clipRule="evenodd" />
+          </svg>
+        )
+      },
+      mobile: {
+        title: "Mobile Development",
+        description: "Mobile application frameworks and tools",
+        icon: (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zM6 4a1 1 0 011-1h6a1 1 0 011 1v10a1 1 0 01-1 1H7a1 1 0 01-1-1V4zm4 12a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+          </svg>
+        )
+      },
+      other: {
+        title: "Other Technologies",
+        description: "Additional tools and technologies",
+        icon: (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+          </svg>
+        )
+      }
+    };
+
+    return categoryMap[category] || categoryMap.other;
+  };
 
   const handleImageError = (imageKey: string) => {
     setImageErrors(prev => new Set(prev).add(imageKey));
@@ -101,64 +136,69 @@ export default function TechnologiesSection() {
       
       <div className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {technologyCategories.map((category) => (
-            <div key={category.id} className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
-              {/* Category Header */}
-              <div className="flex items-center space-x-4 mb-8">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20">
-                  {category.icon}
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-foreground bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
-                    {category.title}
-                  </h3>
-                  <p className="text-accent-text text-sm mt-1">{category.description}</p>
-                </div>
-              </div>
-
-              {/* Technologies List */}
-              <div className="space-y-4">
-                {category.technologies.map((tech, index) => (
-                                     <div key={index} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
-                                         {/* Technology Logo */}
-                     <div className="w-10 h-10 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
-                      {isImageError(`tech-${category.id}-${index}`) ? (
-                        <span className="text-sm font-bold text-primary-button">
-                          {tech.name.charAt(0)}
-                        </span>
-                      ) : (
-                        <img 
-                          src={tech.logo} 
-                          alt={`${tech.name} logo`}
-                          className="w-full h-full object-contain"
-                          onError={() => handleImageError(`tech-${category.id}-${index}`)}
-                        />
-                      )}
-                    </div>
-
-                                         {/* Technology Info */}
-                     <div className="flex-1">
-                       <h4 className="text-base font-semibold text-foreground mb-1">{tech.name}</h4>
-                       <p className="text-xs text-accent-text mb-2">{tech.experience}</p>
-                       <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
-                         <div 
-                           className="h-full rounded-full bg-gradient-to-r from-primary-button/60 to-primary-button/40 transition-all duration-1000 ease-out"
-                           style={{ width: `${tech.level}%` }}
-                         ></div>
-                       </div>
-                     </div>
-
-                     {/* Skill Level */}
-                     <div className="text-right flex-shrink-0">
-                       <span className="text-xs font-semibold text-accent-text">
-                         {tech.level}%
-                       </span>
-                     </div>
+          {Object.entries(groupedTechnologies).map(([categoryKey, categoryTechs]) => {
+            const categoryInfo = getCategoryInfo(categoryKey);
+            return (
+              <div key={categoryKey} className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
+                {/* Category Header */}
+                <div className="flex items-center space-x-4 mb-8">
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20">
+                    {categoryInfo.icon}
                   </div>
-                ))}
+                  <div>
+                    <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                      {categoryInfo.title}
+                    </h3>
+                    <p className="text-accent-text text-sm mt-1">{categoryInfo.description}</p>
+                  </div>
+                </div>
+
+                {/* Technologies List */}
+                <div className="space-y-4">
+                  {categoryTechs.map((tech) => (
+                    <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
+                      {/* Technology Logo */}
+                      <div className="w-10 h-10 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
+                        {!isImageError(`${categoryKey}-${tech.name}`) ? (
+                          <img 
+                            src={tech.logo} 
+                            alt={`${tech.name} logo`}
+                            className="w-full h-full object-contain"
+                            onError={() => handleImageError(`${categoryKey}-${tech.name}`)}
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-accent-text/20 to-accent-text/10 rounded flex items-center justify-center">
+                            <span className="text-accent-text font-bold text-xs">
+                              {tech.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Technology Info */}
+                      <div className="flex-1">
+                        <h4 className="text-base font-semibold text-foreground mb-1">{tech.name}</h4>
+                        <p className="text-xs text-accent-text mb-2">{tech.experience}</p>
+                        <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
+                          <div 
+                            className="h-full rounded-full bg-gradient-to-r from-primary-button/60 to-primary-button/40 transition-all duration-1000 ease-out"
+                            style={{ width: `${tech.level}%` }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      {/* Skill Level */}
+                      <div className="text-right flex-shrink-0">
+                        <span className="text-xs font-semibold text-accent-text">
+                          {tech.level}%
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Summary Stats */}
