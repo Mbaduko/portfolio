@@ -1,13 +1,132 @@
 'use client';
 
 import Image from 'next/image';
+import { useState, useEffect, useRef } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useSkills } from '@/lib/graphql/hooks';
+import type { BackendSkill, BackendTechnology } from '@/lib/graphql/types';
+
+// Small presentational card for a single skill with collapsible technologies list
+function SkillCard({ 
+  skill, 
+  getSkillIcon, 
+  isVisible, 
+  onExpandedChange 
+}: { 
+  skill: BackendSkill; 
+  getSkillIcon: (t: string) => JSX.Element;
+  isVisible: boolean;
+  onExpandedChange: () => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const visibleCount = 4;
+
+  const techs: BackendTechnology[] = Array.isArray(skill.technologies) ? skill.technologies : [];
+  const shownTechs = expanded ? techs : techs.slice(0, visibleCount);
+
+  // Auto-collapse when not visible (always return to collapsed state)
+  useEffect(() => {
+    if (!isVisible) {
+      setExpanded(false);
+    }
+  }, [isVisible]);
+
+  return (
+    <div className="bg-secondary-bg/30 p-6 rounded-2xl border border-secondary-bg/30 hover:border-primary-button/20 transition-all duration-300 group hover:scale-105 flex flex-col">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="flex items-center justify-center w-10 h-10 bg-primary-button/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
+          {getSkillIcon(skill.title)}
+        </div>
+
+        <h3 className="text-lg font-semibold text-foreground">{skill.title}</h3>
+      </div>
+
+      <p className="text-accent-text text-sm mb-4 leading-relaxed">{skill.description}</p>
+
+      <div className="flex items-center justify-between mb-3">
+        <h4 className="text-sm font-semibold text-foreground flex items-center">
+          <svg className="w-4 h-4 mr-2 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+          </svg>
+          Technologies
+        </h4>
+
+        {techs.length > visibleCount && (
+          <button
+            type="button"
+            onClick={() => {
+              setExpanded(!expanded);
+              onExpandedChange();
+            }}
+            className="text-xs text-primary-button hover:underline"
+          >
+            {expanded ? 'Show less' : `+${techs.length - visibleCount} more`}
+          </button>
+        )}
+      </div>
+
+      <div className="flex flex-wrap gap-3 mb-3">
+        {shownTechs.map((tech: BackendTechnology, index: number) => (
+          <span key={index} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 transition-all duration-200 flex items-center gap-3">
+            <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1 overflow-hidden">
+              {tech.logo ? (
+                <Image
+                  src={tech.logo}
+                  alt={`${tech.name} logo`}
+                  width={24}
+                  height={24}
+                  className="w-full h-full object-contain"
+                  unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
+                />
+              ) : (
+                <span className="text-xs font-bold text-primary-button">{tech.name.charAt(0)}</span>
+              )}
+            </div>
+            <span className="font-medium">{tech.name}</span>
+          </span>
+        ))}
+      </div>
+
+      {/* keep card height consistent */}
+      <div className="mt-auto" />
+    </div>
+  );
+}
 
 export default function SkillsSection() {
   // Fetch skills from GraphQL backend
   const { data: skills, loading, error } = useSkills();
+  
+  // Track visibility for auto-collapse behavior
+  const [isVisible, setIsVisible] = useState(true);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Intersection observer to detect when skills section is visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting;
+        setIsVisible(visible);
+      },
+      { threshold: 0.1 } // Trigger when 10% of section is visible
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  const handleExpandedChange = () => {
+    // No need to save states since we always return to collapsed
+  };
 
   // Handle loading state
   if (loading) {
@@ -144,71 +263,33 @@ export default function SkillsSection() {
   };
 
   return (
-    <SectionWrapper id="skills" padding="lg" showBackground>
-      <SectionHeader
-        title="Skills & Expertise"
-        subtitle="Technical competencies and specializations"
-        icon={
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-          </svg>
-        }
-        variant="secondary"
-      />
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {skills.map((skill) => (
-            <div key={skill.id} className="bg-secondary-bg/30 p-6 rounded-2xl border border-secondary-bg/30 hover:border-primary-button/20 transition-all duration-300 group hover:scale-105">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="flex items-center justify-center w-10 h-10 bg-primary-button/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
-                  {getSkillIcon(skill.title)}
-                </div>
-
-                <h3 className="text-lg font-semibold text-foreground">
-                  {skill.title}
-                </h3>
-              </div>
-            
-            <p className="text-accent-text text-sm mb-6 leading-relaxed">
-              {skill.description}
-            </p>
-            
-            {/* Technologies List */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground mb-4 flex items-center">
-                <svg className="w-4 h-4 mr-2 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                </svg>
-                Technologies
-              </h4>
-              <div className="flex flex-wrap gap-3">
-                {skill.technologies.map((tech, index) => (
-                  <span key={index} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 hover:scale-105 hover:border-primary-button/40 transition-all duration-200 flex items-center gap-3 shadow-sm hover:shadow-md">
-                    <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1">
-                      {tech.logo ? (
-                        <Image 
-                          src={tech.logo} 
-                          alt={`${tech.name} logo`}
-                          width={24}
-                          height={24}
-                          className="w-full h-full object-contain"
-                          unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
-                          onError={() => {
-                            // Handle error by showing fallback
-                          }}
-                        />
-                      ) : (
-                        <span className="text-xs font-bold text-primary-button">{tech.name.charAt(0)}</span>
-                      )}
-                    </div>
-                    <span className="font-medium">{tech.name}</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </SectionWrapper>
+    <div ref={sectionRef}>
+      <SectionWrapper id="skills" padding="lg" showBackground>
+        <SectionHeader
+          title="Skills & Expertise"
+          subtitle="Technical competencies and specializations"
+          icon={
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+            </svg>
+          }
+          variant="secondary"
+        />
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {skills.map((skill) => {
+            return (
+              <SkillCard 
+                key={skill.id} 
+                skill={skill} 
+                getSkillIcon={getSkillIcon} 
+                isVisible={isVisible}
+                onExpandedChange={handleExpandedChange}
+              />
+            );
+          })}
+        </div>
+      </SectionWrapper>
+    </div>
   );
 }
