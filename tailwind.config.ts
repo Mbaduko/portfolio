@@ -9,11 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#1E1E1E",
-        foreground: "#FFFFFF",
-        "secondary-bg": "#2B3036",
-        "accent-text": "#9CABBA",
-        "primary-button": "#0A80ED",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        "secondary-bg": "var(--secondary-bg)",
+        "accent-text": "var(--accent-text)",
+        "primary-button": "var(--primary-button)",
       },
       fontFamily: {
         sans: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],

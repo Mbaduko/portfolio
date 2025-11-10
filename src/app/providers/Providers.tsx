@@ -2,6 +2,7 @@
 
 import { ReactNode, useEffect } from 'react';
 import GraphQLProvider from '@/lib/graphql/GraphQLProvider';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -34,8 +35,10 @@ export default function Providers({ children }: ProvidersProps) {
   }, []);
 
   return (
-    <GraphQLProvider>
-      {children}
-    </GraphQLProvider>
+    <ThemeProvider>
+      <GraphQLProvider>
+        {children}
+      </GraphQLProvider>
+    </ThemeProvider>
   );
 }

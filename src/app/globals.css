@@ -1,11 +1,44 @@
 @import "tailwindcss";
 
 :root {
+  /* Dark theme (default) */
   --background: #1E1E1E;
   --foreground: #FFFFFF;
   --secondary-bg: #2B3036;
   --accent-text: #9CABBA;
   --primary-button: #0A80ED;
+  
+  /* Scrollbar colors */
+  --scrollbar-thumb: rgba(10, 128, 237, 0.75);
+  --scrollbar-thumb-hover: rgba(10, 128, 237, 0.95);
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  --background: #FFFFFF;
+  --foreground: #1A1A1A;
+  --secondary-bg: #F5F5F7;
+  --accent-text: #666666;
+  --primary-button: #0A80ED;
+  
+  /* Light theme scrollbar colors */
+  --scrollbar-thumb: rgba(10, 128, 237, 0.6);
+  --scrollbar-thumb-hover: rgba(10, 128, 237, 0.8);
+}
+
+/* Auto light theme based on system preference */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --background: #FFFFFF;
+    --foreground: #1A1A1A;
+    --secondary-bg: #F5F5F7;
+    --accent-text: #666666;
+    --primary-button: #0A80ED;
+    
+    /* Light theme scrollbar colors for system preference */
+    --scrollbar-thumb: rgba(10, 128, 237, 0.6);
+    --scrollbar-thumb-hover: rgba(10, 128, 237, 0.8);
+  }
 }
 
 @theme inline {
@@ -22,6 +55,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth theme transitions for all elements */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
 }
 
 /* Custom scrollbar: hidden by default, visible when scrolling or on hover
