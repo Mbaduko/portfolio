@@ -12,7 +12,6 @@ export default function Header() {
 
       const sections = ['home', 'bio', 'skills', 'experience', 'certificates', 'projects', 'technologies', 'contact'];
       const scrollPosition = mainElement.scrollTop;
-      const viewportHeight = mainElement.clientHeight;
       const threshold = 100; // Threshold for section detection
 
       // Check if we're at the very top (hero section)

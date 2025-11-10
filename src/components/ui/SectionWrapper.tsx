@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface SectionWrapperProps {
   children: React.ReactNode;
   id?: string;
@@ -6,13 +8,13 @@ interface SectionWrapperProps {
   padding?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export default function SectionWrapper({ 
+const SectionWrapper = React.forwardRef<HTMLElement, SectionWrapperProps>(({ 
   children, 
   id, 
   className = '', 
   showBackground = false,
   padding = 'lg'
-}: SectionWrapperProps) {
+}, ref) => {
   const paddingClasses = {
     sm: 'py-8',
     md: 'py-12',
@@ -22,6 +24,7 @@ export default function SectionWrapper({
 
   return (
     <section 
+      ref={ref}
       id={id} 
       className={`
         relative ${paddingClasses[padding]}
@@ -46,4 +49,8 @@ export default function SectionWrapper({
       <div className="h-8"></div>
     </section>
   );
-}
+});
+
+SectionWrapper.displayName = 'SectionWrapper';
+
+export default SectionWrapper;

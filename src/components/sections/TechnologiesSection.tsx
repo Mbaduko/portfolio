@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -11,7 +12,7 @@ import type { BackendTechnology } from '@/lib/graphql/types';
 interface CategoryInfo {
   title: string;
   description: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
 }
 
 interface TechnologyCardProps {
@@ -134,7 +135,7 @@ function TechnologyCard({
 export default function TechnologiesSection() {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   // Fetch technologies from GraphQL backend
   const { data: technologies, loading, error } = useTechnologies();

@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
@@ -15,7 +16,7 @@ function SkillCard({
   onExpandedChange 
 }: { 
   skill: BackendSkill; 
-  getSkillIcon: (t: string) => JSX.Element;
+  getSkillIcon: (t: string) => React.ReactElement;
   isVisible: boolean;
   onExpandedChange: () => void;
 }) {
