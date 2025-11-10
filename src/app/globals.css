@@ -78,3 +78,21 @@ html.scrolling *::-webkit-scrollbar-thumb,
   background: var(--scrollbar-thumb-hover);
 }
 
+/* Line clamp utilities (used when Tailwind line-clamp plugin is not available) */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+

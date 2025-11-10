@@ -158,14 +158,16 @@ export default function SkillsSection() {
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {skills.map((skill) => (
-          <div key={skill.id} className="bg-gradient-to-br from-secondary-bg/40 to-secondary-bg/20 p-6 rounded-2xl border border-secondary-bg/30 hover:border-primary-button/20 transition-all duration-300 group hover:scale-105">
-            <div className="flex items-center justify-center w-12 h-12 bg-primary-button/20 rounded-lg mb-4 group-hover:scale-110 transition-transform duration-300">
-              {getSkillIcon(skill.title)}
-            </div>
-            
-            <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
-              {skill.title}
-            </h3>
+            <div key={skill.id} className="bg-secondary-bg/30 p-6 rounded-2xl border border-secondary-bg/30 hover:border-primary-button/20 transition-all duration-300 group hover:scale-105">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex items-center justify-center w-10 h-10 bg-primary-button/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
+                  {getSkillIcon(skill.title)}
+                </div>
+
+                <h3 className="text-lg font-semibold text-foreground">
+                  {skill.title}
+                </h3>
+              </div>
             
             <p className="text-accent-text text-sm mb-6 leading-relaxed">
               {skill.description}
