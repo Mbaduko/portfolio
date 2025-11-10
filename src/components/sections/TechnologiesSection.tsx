@@ -1,13 +1,140 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { useTechnologies, useExperiences } from '@/lib/graphql/hooks';
+import type { BackendTechnology } from '@/lib/graphql/types';
+
+// TechnologyCard component for individual category display
+interface CategoryInfo {
+  title: string;
+  description: string;
+  icon: JSX.Element;
+}
+
+interface TechnologyCardProps {
+  categoryKey: string;
+  categoryTechs: BackendTechnology[];
+  categoryInfo: CategoryInfo;
+  isExpanded: boolean;
+  onToggle: () => void;
+  imageErrors: Set<string>;
+  handleImageError: (key: string) => void;
+  isValidImageUrl: (url?: string) => boolean;
+}
+
+function TechnologyCard({ 
+  categoryKey, 
+  categoryTechs, 
+  categoryInfo, 
+  isExpanded, 
+  onToggle,
+  imageErrors,
+  handleImageError,
+  isValidImageUrl
+}: TechnologyCardProps) {
+  const isImageError = useCallback((imageKey: string) => {
+    return imageErrors.has(imageKey);
+  }, [imageErrors]);
+
+  const shouldShowExpandButton = categoryTechs.length > 3;
+  const visibleTechs = shouldShowExpandButton && !isExpanded ? categoryTechs.slice(0, 3) : categoryTechs;
+  const hiddenCount = shouldShowExpandButton ? categoryTechs.length - 3 : 0;
+
+  return (
+    <div className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
+      {/* Category Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center space-x-4">
+          <div className="w-14 h-14 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20">
+            {categoryInfo.icon}
+          </div>
+          <div>
+            <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+              {categoryInfo.title}
+            </h3>
+            <p className="text-accent-text text-sm mt-1">{categoryInfo.description}</p>
+          </div>
+        </div>
+        {shouldShowExpandButton && (
+          <button
+            onClick={onToggle}
+            className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-primary-button/10 hover:bg-primary-button/20 border border-primary-button/20 text-primary-button text-sm transition-all duration-200"
+          >
+            <span>{isExpanded ? 'Show Less' : `+${hiddenCount} more`}</span>
+            <svg 
+              className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Technologies List */}
+      <div className="space-y-4">
+        {visibleTechs.map((tech) => (
+          <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
+            {/* Technology Logo */}
+            <div className="w-10 h-10 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
+              {!isImageError(`${categoryKey}-${tech.name}`) && tech.logo && isValidImageUrl(tech.logo) ? (
+                <Image 
+                  src={tech.logo} 
+                  alt={`${tech.name} logo`}
+                  width={40}
+                  height={40}
+                  className="w-full h-full object-contain"
+                  onError={() => handleImageError(`${categoryKey}-${tech.name}`)}
+                  unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-accent-text/20 to-accent-text/10 rounded flex items-center justify-center">
+                  <span className="text-accent-text font-bold text-xs">
+                    {tech.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Technology Info */}
+            <div className="flex-1">
+              <h4 className="text-base font-semibold text-foreground mb-1">{tech.name}</h4>
+              <p className="text-xs text-accent-text mb-2">{tech.experience}</p>
+              <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
+                <div 
+                  className="h-full rounded-full bg-gradient-to-r from-primary-button/60 to-primary-button/40 transition-all duration-1000 ease-out"
+                  data-level={tech.level}
+                  ref={(el) => {
+                    if (el) {
+                      el.style.width = `${tech.level}%`;
+                    }
+                  }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Skill Level */}
+            <div className="text-right flex-shrink-0">
+              <span className="text-xs font-semibold text-accent-text">
+                {tech.level}%
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function TechnologiesSection() {
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
+  const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch technologies from GraphQL backend
   const { data: technologies, loading, error } = useTechnologies();
@@ -15,13 +142,40 @@ export default function TechnologiesSection() {
   // Fetch experiences for years calculation
   const { data: experiences } = useExperiences();
 
+  // Auto-collapse when section is not visible
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            setExpandedCategories(new Set());
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleCategory = useCallback((categoryKey: string) => {
+    setExpandedCategories(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(categoryKey)) {
+        newSet.delete(categoryKey);
+      } else {
+        newSet.add(categoryKey);
+      }
+      return newSet;
+    });
+  }, []);
+
   const handleImageError = useCallback((imageKey: string) => {
     setImageErrors(prev => new Set(prev).add(imageKey));
   }, []);
-
-  const isImageError = useCallback((imageKey: string) => {
-    return imageErrors.has(imageKey);
-  }, [imageErrors]);
 
   const isValidImageUrl = useCallback((url: string | null | undefined) => {
     if (!url || typeof url !== 'string') {
@@ -206,7 +360,7 @@ export default function TechnologiesSection() {
 
 
   return (
-    <SectionWrapper id="technologies" padding="lg" showBackground>
+    <SectionWrapper id="technologies" padding="lg" showBackground ref={sectionRef}>
       <SectionHeader
         title="Technology Stack"
         subtitle="Tools, frameworks, and technologies I work with"
@@ -222,73 +376,20 @@ export default function TechnologiesSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {Object.entries(groupedTechnologies).map(([categoryKey, categoryTechs]) => {
             const categoryInfo = getCategoryInfo(categoryKey);
+            const isExpanded = expandedCategories.has(categoryKey);
+            
             return (
-              <div key={categoryKey} className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
-                {/* Category Header */}
-                <div className="flex items-center space-x-4 mb-8">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20">
-                    {categoryInfo.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
-                      {categoryInfo.title}
-                    </h3>
-                    <p className="text-accent-text text-sm mt-1">{categoryInfo.description}</p>
-                  </div>
-                </div>
-
-                {/* Technologies List */}
-                <div className="space-y-4">
-                  {categoryTechs.map((tech) => (
-                    <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
-                      {/* Technology Logo */}
-                      <div className="w-10 h-10 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
-                        {!isImageError(`${categoryKey}-${tech.name}`) && tech.logo && isValidImageUrl(tech.logo) ? (
-                          <Image 
-                            src={tech.logo} 
-                            alt={`${tech.name} logo`}
-                            width={40}
-                            height={40}
-                            className="w-full h-full object-contain"
-                            onError={() => handleImageError(`${categoryKey}-${tech.name}`)}
-                            unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-accent-text/20 to-accent-text/10 rounded flex items-center justify-center">
-                            <span className="text-accent-text font-bold text-xs">
-                              {tech.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Technology Info */}
-                      <div className="flex-1">
-                        <h4 className="text-base font-semibold text-foreground mb-1">{tech.name}</h4>
-                        <p className="text-xs text-accent-text mb-2">{tech.experience}</p>
-                        <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
-                          <div 
-                            className="h-full rounded-full bg-gradient-to-r from-primary-button/60 to-primary-button/40 transition-all duration-1000 ease-out"
-                            data-level={tech.level}
-                            ref={(el) => {
-                              if (el) {
-                                el.style.width = `${tech.level}%`;
-                              }
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-
-                      {/* Skill Level */}
-                      <div className="text-right flex-shrink-0">
-                        <span className="text-xs font-semibold text-accent-text">
-                          {tech.level}%
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <TechnologyCard
+                key={categoryKey}
+                categoryKey={categoryKey}
+                categoryTechs={categoryTechs}
+                categoryInfo={categoryInfo}
+                isExpanded={isExpanded}
+                onToggle={() => toggleCategory(categoryKey)}
+                imageErrors={imageErrors}
+                handleImageError={handleImageError}
+                isValidImageUrl={isValidImageUrl}
+              />
             );
           })}
         </div>
