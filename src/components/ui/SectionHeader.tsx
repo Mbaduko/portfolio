@@ -15,19 +15,19 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   const variants = {
     primary: {
-      bg: 'bg-gradient-to-r from-primary-button/20 to-primary-button/10',
+      bg: 'bg-primary-button/15',
       border: 'border-primary-button/30',
       text: 'text-primary-button',
       iconBg: 'bg-primary-button/20'
     },
     secondary: {
-      bg: 'bg-gradient-to-r from-secondary-bg/50 to-secondary-bg/30',
+      bg: 'bg-secondary-bg/40',
       border: 'border-secondary-bg/40',
       text: 'text-accent-text',
       iconBg: 'bg-secondary-bg/50'
     },
     accent: {
-      bg: 'bg-gradient-to-r from-accent-text/20 to-accent-text/10',
+      bg: 'bg-accent-text/15',
       border: 'border-accent-text/30',
       text: 'text-accent-text',
       iconBg: 'bg-accent-text/20'
@@ -42,9 +42,9 @@ export default function SectionHeader({
       <div className={`relative ${currentVariant.bg} border ${currentVariant.border} rounded-2xl p-6 backdrop-blur-sm`}>
         {/* Background Pattern */}
         <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
-          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent to-white/10 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-transparent to-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+          <div className="absolute inset-0 bg-white/3"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-16 translate-x-16"></div>
+          <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-12 -translate-x-12"></div>
         </div>
 
         {/* Content */}

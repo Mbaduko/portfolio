@@ -71,12 +71,12 @@ export default function Sidebar() {
   }, [currentText, isDeleting, currentSkillIndex, typingSpeed, skills]);
 
   return (
-    <aside className="w-80 bg-gradient-to-b from-background to-background/95 border-r border-secondary-bg/30 p-8 space-y-8 shadow-lg">
+    <aside className="w-80 bg-background border-r border-secondary-bg/30 p-8 space-y-8 shadow-lg">
       {/* Profile Section */}
       <div className="space-y-6">
         {/* Profile Picture */}
         <div className="flex justify-center">
-          <div className="relative w-36 h-36 rounded-2xl overflow-hidden bg-gradient-to-br from-secondary-bg/50 to-secondary-bg/20 border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+          <div className="relative w-36 h-36 rounded-2xl overflow-hidden bg-secondary-bg/30 border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
             <Image
               src="/profile.jpg"
               alt="Clement NSENGIYUMVA"
@@ -89,18 +89,18 @@ export default function Sidebar() {
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
-                  parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-5xl font-bold text-accent-text bg-gradient-to-br from-secondary-bg/30 to-secondary-bg/10">CN</div>';
+                  parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-5xl font-bold text-accent-text bg-secondary-bg/20">CN</div>';
                 }
               }}
             />
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-background/10"></div>
           </div>
         </div>
 
         {/* Name and Title */}
         <div className="text-center space-y-3">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent">
+          <h2 className="text-2xl font-bold text-foreground">
             Clement NSENGIYUMVA
           </h2>
           <div className="h-6 flex items-center justify-center">
@@ -129,7 +129,7 @@ export default function Sidebar() {
               <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
             </svg>
           </div>
-          <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+          <h3 className="text-xl font-bold text-foreground">
             Contact
           </h3>
         </div>

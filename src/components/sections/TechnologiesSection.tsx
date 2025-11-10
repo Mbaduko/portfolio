@@ -44,15 +44,15 @@ function TechnologyCard({
   const hiddenCount = shouldShowExpandButton ? categoryTechs.length - 3 : 0;
 
   return (
-    <div className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
+    <div className="bg-secondary-bg/60 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
       {/* Category Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-4">
-          <div className="w-14 h-14 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20">
+          <div className="w-14 h-14 bg-primary-button/15 rounded-xl flex items-center justify-center border border-primary-button/20">
             {categoryInfo.icon}
           </div>
           <div>
-            <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+            <h3 className="text-xl font-bold text-foreground">
               {categoryInfo.title}
             </h3>
             <p className="text-accent-text text-sm mt-1">{categoryInfo.description}</p>
@@ -81,7 +81,7 @@ function TechnologyCard({
         {visibleTechs.map((tech) => (
           <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
             {/* Technology Logo */}
-            <div className="w-10 h-10 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
+            <div className="w-10 h-10 bg-primary-button/15 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
               {!isImageError(`${categoryKey}-${tech.name}`) && tech.logo && isValidImageUrl(tech.logo) ? (
                 <Image 
                   src={tech.logo} 
@@ -93,7 +93,7 @@ function TechnologyCard({
                   unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-accent-text/20 to-accent-text/10 rounded flex items-center justify-center">
+                <div className="w-full h-full bg-accent-text/15 rounded flex items-center justify-center">
                   <span className="text-accent-text font-bold text-xs">
                     {tech.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
                   </span>
@@ -107,7 +107,7 @@ function TechnologyCard({
               <p className="text-xs text-accent-text mb-2">{tech.experience}</p>
               <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
                 <div 
-                  className="h-full rounded-full bg-gradient-to-r from-primary-button/60 to-primary-button/40 transition-all duration-1000 ease-out"
+                  className="h-full rounded-full bg-primary-button/50 transition-all duration-1000 ease-out"
                   data-level={tech.level}
                   ref={(el) => {
                     if (el) {
@@ -395,7 +395,7 @@ export default function TechnologiesSection() {
         </div>
 
         {/* Summary Stats - Dynamic from Backend Data */}
-        <div className="bg-gradient-to-r from-secondary-bg/70 to-secondary-bg/50 rounded-2xl p-8 border border-secondary-bg/40">
+        <div className="bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40">
           <h3 className="text-xl font-bold text-foreground mb-6 text-center">Technology Summary</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">

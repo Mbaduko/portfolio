@@ -60,7 +60,7 @@ export default function ContactSection() {
       <div className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Contact Form */}
-          <div className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
+          <div className="bg-secondary-bg/60 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 bg-primary-button/20 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -69,7 +69,7 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                <h3 className="text-xl font-bold text-foreground">
                   Send Message
                 </h3>
                 <p className="text-accent-text text-sm">I&apos;ll get back to you as soon as possible</p>
@@ -127,7 +127,7 @@ export default function ContactSection() {
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary-button to-primary-button/90 text-white py-4 px-6 rounded-xl font-semibold hover:from-primary-button/90 hover:to-primary-button/80 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="w-full bg-primary-button text-white py-4 px-6 rounded-xl font-semibold hover:bg-primary-button/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 <div className="flex items-center justify-center space-x-2">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -141,7 +141,7 @@ export default function ContactSection() {
           </div>
 
           {/* Contact Information */}
-          <div className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
+          <div className="bg-secondary-bg/60 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 bg-primary-button/20 rounded-lg flex items-center justify-center">
                 <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -149,7 +149,7 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-xl font-bold bg-gradient-to-r from-foreground to-accent-text bg-clip-text text-transparent">
+                <h3 className="text-xl font-bold text-foreground">
                   Contact Information
                 </h3>
                 <p className="text-accent-text text-sm">Reach out through any of these channels</p>
@@ -238,7 +238,7 @@ export default function ContactSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="bg-gradient-to-r from-secondary-bg/70 to-secondary-bg/50 rounded-2xl p-8 border border-secondary-bg/40 text-center">
+        <div className="bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40 text-center">
           <h3 className="text-xl font-bold text-foreground mb-4">Ready to Start a Project?</h3>
           <p className="text-accent-text mb-6 max-w-2xl mx-auto">
             I&apos;m always excited to work on new projects and collaborate with amazing teams. 
@@ -248,7 +248,7 @@ export default function ContactSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="mailto:nsengiyumvaclement247@gmail.com"
-              className="bg-gradient-to-r from-primary-button to-primary-button/90 text-white px-8 py-3 rounded-xl font-semibold hover:from-primary-button/90 hover:to-primary-button/80 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="bg-primary-button text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary-button/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <div className="flex items-center justify-center space-x-2">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -260,7 +260,7 @@ export default function ContactSection() {
             </a>
             <a 
               href="tel:+250791130583"
-              className="bg-gradient-to-r from-secondary-bg/60 to-secondary-bg/40 text-foreground px-8 py-3 rounded-xl font-semibold border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="bg-secondary-bg/50 text-foreground px-8 py-3 rounded-xl font-semibold border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <div className="flex items-center justify-center space-x-2">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

@@ -6,7 +6,7 @@ export default function Footer() {
   const { data: skillsData } = useSkills();
 
   return (
-    <footer className="bg-gradient-to-r from-background/95 to-background/90 border-t border-secondary-bg/30 py-12 shadow-lg">
+    <footer className="bg-background/95 border-t border-secondary-bg/30 py-12 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
@@ -18,7 +18,7 @@ export default function Footer() {
                   <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent">
+              <h3 className="text-xl font-bold text-foreground">
                 Mbaduko
               </h3>
             </div>

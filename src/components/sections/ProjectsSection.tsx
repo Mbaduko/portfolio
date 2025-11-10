@@ -193,7 +193,7 @@ export default function ProjectsSection() {
           <div className="flex justify-center">
             <button
               onClick={() => setShowAllProjects(!showAllProjects)}
-              className="bg-gradient-to-r from-primary-button/20 to-primary-button/10 text-primary-button px-8 py-4 rounded-xl font-semibold hover:from-primary-button/30 hover:to-primary-button/20 transition-all duration-300 border border-primary-button/30 hover:border-primary-button/50 shadow-lg hover:shadow-xl transform hover:scale-105"
+              className="bg-primary-button/15 text-primary-button px-8 py-4 rounded-xl font-semibold hover:from-primary-button/30 hover:to-primary-button/20 transition-all duration-300 border border-primary-button/30 hover:border-primary-button/50 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <div className="flex items-center justify-center space-x-3">
                 <svg className={`w-5 h-5 transition-transform duration-300 ${showAllProjects ? 'rotate-180' : ''}`} fill="currentColor" viewBox="0 0 20 20">

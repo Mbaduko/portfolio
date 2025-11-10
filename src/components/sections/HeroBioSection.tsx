@@ -66,10 +66,10 @@ export default function HeroBioSection() {
     <SectionWrapper id="home" padding="md" showBackground>
       {/* Hero Title - Optimized for Visibility */}
       <div className="text-center mb-6">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 bg-gradient-to-r from-foreground via-primary-button to-accent-text bg-clip-text text-transparent">
-          Let&apos;s Digitize Our Continent!!
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground">
+          Mbaduko Christopher
         </h1>
-        <div className="w-24 h-1.5 bg-gradient-to-r from-primary-button to-accent-text mx-auto rounded-full shadow-lg"></div>
+        <div className="w-24 h-1.5 bg-primary-button mx-auto rounded-full shadow-lg"></div>
       </div>
 
       {/* Main Content - Optimized Layout */}

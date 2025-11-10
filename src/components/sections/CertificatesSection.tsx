@@ -116,15 +116,15 @@ export default function CertificatesSection() {
                 onClick={() => setActiveFilter(category.id)}
                 className={`p-4 rounded-2xl border transition-all duration-300 transform group relative overflow-hidden ${
                   activeFilter === category.id
-                    ? 'bg-gradient-to-r from-primary-button to-primary-button/90 text-white shadow-lg shadow-primary-button/25 border-primary-button/30 scale-105'
-                    : 'bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 text-foreground border-secondary-bg/30 hover:border-primary-button/30 hover:bg-secondary-bg/70 hover:scale-105 hover:shadow-lg hover:shadow-primary-button/10'
+                    ? 'bg-primary-button text-white shadow-lg shadow-primary-button/25 border-primary-button/30 scale-105'
+                    : 'bg-secondary-bg/60 text-foreground border-secondary-bg/30 hover:border-primary-button/30 hover:bg-secondary-bg/70 hover:scale-105 hover:shadow-lg hover:shadow-primary-button/10'
                 }`}
               >
                 {/* Background Animation */}
                 <div className={`absolute inset-0 transition-all duration-300 ${
                   activeFilter === category.id
-                    ? 'bg-gradient-to-r from-white/10 to-white/5'
-                    : 'bg-gradient-to-r from-primary-button/5 to-transparent opacity-0 group-hover:opacity-100'
+                    ? 'bg-white/8'
+                    : 'bg-primary-button/5 opacity-0 group-hover:opacity-100'
                 }`}></div>
                 
                 <div className="text-center space-y-2 relative z-10">
@@ -197,10 +197,10 @@ export default function CertificatesSection() {
         {/* Certificates Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {filteredCertificates.map((cert) => (
-            <div key={cert.id} className="bg-gradient-to-br from-secondary-bg/80 to-secondary-bg/50 p-6 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
+            <div key={cert.id} className="bg-secondary-bg/60 p-6 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
               <div className="flex items-start space-x-4">
                 {/* Certificate Logo */}
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-button/20 to-primary-button/10 rounded-xl flex items-center justify-center border border-primary-button/20 flex-shrink-0">
+                <div className="w-16 h-16 bg-primary-button/15 rounded-xl flex items-center justify-center border border-primary-button/20 flex-shrink-0">
                   {!isImageError(cert.id) && cert.logo ? (
                     <Image
                       src={cert.logo}
@@ -212,7 +212,7 @@ export default function CertificatesSection() {
                       onError={() => handleImageError(cert.id)}
                     />
                   ) : (
-                    <div className="w-10 h-10 bg-gradient-to-br from-accent-text/20 to-accent-text/10 rounded-lg flex items-center justify-center">
+                    <div className="w-10 h-10 bg-accent-text/15 rounded-lg flex items-center justify-center">
                       <span className="text-accent-text font-bold text-lg">
                         {cert.issuer.split(' ').map(word => word[0]).join('').slice(0, 2)}
                       </span>
@@ -278,7 +278,7 @@ export default function CertificatesSection() {
                       <div className="flex space-x-2">
                         <a
                           href={`mailto:nsengiyumvaclement247@gmail.com?subject=Verification Request: ${cert.title}&body=Hello,%0D%0A%0D%0AI would like to verify the following achievement:%0D%0A%0D%0ATitle: ${cert.title}%0D%0AIssuer: ${cert.issuer}%0D%0ACredential ID: ${cert.credentialId || 'N/A'}%0D%0ADate: ${cert.issuedDate}%0D%0A%0D%0APlease provide verification details.%0D%0A%0D%0AThank you.`}
-                          className="px-3 py-1.5 bg-gradient-to-r from-purple-500/20 to-purple-500/10 text-purple-400 text-xs font-medium rounded-lg border border-purple-500/20 hover:bg-purple-500/30 hover:border-purple-500/30 transition-all duration-300 flex items-center space-x-1"
+                          className="px-3 py-1.5 bg-purple-500/15 text-purple-400 text-xs font-medium rounded-lg border border-purple-500/20 hover:bg-purple-500/30 hover:border-purple-500/30 transition-all duration-300 flex items-center space-x-1"
                         >
                           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
@@ -296,7 +296,7 @@ export default function CertificatesSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="bg-gradient-to-r from-secondary-bg/70 to-secondary-bg/50 rounded-2xl p-8 border border-secondary-bg/40 text-center">
+        <div className="bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40 text-center">
           <h3 className="text-xl font-bold text-foreground mb-4">Continuously Learning & Growing</h3>
           <p className="text-accent-text mb-6 max-w-2xl mx-auto">
             I believe in continuous learning and staying updated with the latest technologies. 
@@ -305,7 +305,7 @@ export default function CertificatesSection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
               href="mailto:nsengiyumvaclement247@gmail.com?subject=Achievement Verification"
-              className="bg-gradient-to-r from-primary-button to-primary-button/90 text-white px-8 py-3 rounded-xl font-semibold hover:from-primary-button/90 hover:to-primary-button/80 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="bg-primary-button text-white px-8 py-3 rounded-xl font-semibold hover:bg-primary-button/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <div className="flex items-center justify-center space-x-2">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -316,7 +316,7 @@ export default function CertificatesSection() {
             </a>
             <a 
               href="#contact"
-              className="bg-gradient-to-r from-secondary-bg/60 to-secondary-bg/40 text-foreground px-8 py-3 rounded-xl font-semibold border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="bg-secondary-bg/50 text-foreground px-8 py-3 rounded-xl font-semibold border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
             >
               <div className="flex items-center justify-center space-x-2">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">

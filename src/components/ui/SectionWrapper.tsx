@@ -25,15 +25,15 @@ export default function SectionWrapper({
       id={id} 
       className={`
         relative ${paddingClasses[padding]}
-        ${showBackground ? 'bg-gradient-to-br from-secondary-bg/20 to-transparent' : ''}
+        ${showBackground ? 'bg-secondary-bg/10' : ''}
         ${className}
       `}
     >
       {/* Background Pattern (if enabled) */}
       {showBackground && (
         <div className="absolute inset-0 overflow-hidden opacity-5">
-          <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-primary-button/20 to-transparent rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-gradient-to-tl from-accent-text/20 to-transparent rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-primary-button/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-48 h-48 bg-accent-text/10 rounded-full blur-3xl"></div>
         </div>
       )}
 

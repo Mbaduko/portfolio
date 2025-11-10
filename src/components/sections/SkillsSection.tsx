@@ -68,7 +68,7 @@ function SkillCard({
 
       <div className="flex flex-wrap gap-3 mb-3">
         {shownTechs.map((tech: BackendTechnology, index: number) => (
-          <span key={index} className="bg-gradient-to-r from-primary-button/15 to-primary-button/5 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 transition-all duration-200 flex items-center gap-3">
+          <span key={index} className="bg-primary-button/10 text-primary-button px-4 py-2.5 rounded-xl text-sm font-semibold border border-primary-button/25 transition-all duration-200 flex items-center gap-3">
             <div className="w-6 h-6 bg-white rounded-lg flex items-center justify-center p-1 overflow-hidden">
               {tech.logo ? (
                 <Image
