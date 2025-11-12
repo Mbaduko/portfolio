@@ -8,6 +8,10 @@
   --accent-text: #9CABBA;
   --primary-button: #0A80ED;
   
+  /* Icon styling for dark theme */
+  --icon-bg: rgba(10, 128, 237, 0.2);
+  --icon-text: #FFFFFF;
+  
   /* Scrollbar colors */
   --scrollbar-thumb: rgba(10, 128, 237, 0.75);
   --scrollbar-thumb-hover: rgba(10, 128, 237, 0.95);
@@ -15,11 +19,15 @@
 
 /* Light theme */
 :root[data-theme="light"] {
-  --background: #FFFFFF;
-  --foreground: #1A1A1A;
-  --secondary-bg: #F5F5F7;
-  --accent-text: #666666;
+  --background: #FAFAFA;
+  --foreground: #2D2D2D;
+  --secondary-bg: #F0F0F2;
+  --accent-text: #737373;
   --primary-button: #0A80ED;
+  
+  /* Icon styling for light theme */
+  --icon-bg: #0A80ED;
+  --icon-text: #FFFFFF;
   
   /* Light theme scrollbar colors */
   --scrollbar-thumb: rgba(10, 128, 237, 0.6);
@@ -29,11 +37,15 @@
 /* Auto light theme based on system preference */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --background: #FFFFFF;
-    --foreground: #1A1A1A;
-    --secondary-bg: #F5F5F7;
-    --accent-text: #666666;
+    --background: #FAFAFA;
+    --foreground: #2D2D2D;
+    --secondary-bg: #F0F0F2;
+    --accent-text: #737373;
     --primary-button: #0A80ED;
+    
+    /* Icon styling for light theme system preference */
+    --icon-bg: #0A80ED;
+    --icon-text: #FFFFFF;
     
     /* Light theme scrollbar colors for system preference */
     --scrollbar-thumb: rgba(10, 128, 237, 0.6);
@@ -47,6 +59,8 @@
   --color-secondary-bg: var(--secondary-bg);
   --color-accent-text: var(--accent-text);
   --color-primary-button: var(--primary-button);
+  --color-icon-bg: var(--icon-bg);
+  --color-icon-text: var(--icon-text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

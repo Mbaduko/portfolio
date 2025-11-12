@@ -67,8 +67,8 @@ export default function Header() {
               onClick={() => scrollToSection('home')}
               className="flex items-center space-x-2 text-2xl font-bold text-foreground hover:text-primary-button hover:scale-105 transition-all duration-300"
             >
-              <div className="w-8 h-8 bg-primary-button rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-8 h-8 bg-icon-bg rounded-lg flex items-center justify-center">
+                <svg className="w-5 h-5 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -83,7 +83,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'home' || activeSection === 'bio'
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Home
@@ -93,7 +93,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'skills' 
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Skills
@@ -103,7 +103,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'experience' 
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Experience
@@ -113,7 +113,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'certificates' 
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Certificates
@@ -123,7 +123,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'projects' 
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Projects
@@ -133,7 +133,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'technologies' 
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Technologies
@@ -143,7 +143,7 @@ export default function Header() {
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
                 activeSection === 'contact' 
                   ? 'text-white font-semibold bg-primary-button shadow-lg shadow-primary-button/25 border border-primary-button/30' 
-                  : 'text-foreground hover:text-white hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
+                  : 'text-foreground hover:text-primary-button hover:bg-primary-button/80 hover:shadow-md hover:shadow-primary-button/20'
               }`}
             >
               Contact

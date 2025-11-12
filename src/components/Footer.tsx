@@ -13,8 +13,8 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <div className="w-10 h-10 bg-icon-bg rounded-lg flex items-center justify-center">
+                <svg className="w-6 h-6 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
                 </svg>
               </div>
@@ -32,9 +32,9 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow me on Twitter"
-                className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="w-10 h-10 bg-icon-bg rounded-lg flex items-center justify-center hover:bg-primary-button/80 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-icon-text" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                 </svg>
               </a>
@@ -43,9 +43,9 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Connect with me on LinkedIn"
-                className="w-10 h-10 bg-primary-button/20 rounded-lg flex items-center justify-center hover:bg-primary-button/30 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="w-10 h-10 bg-icon-bg rounded-lg flex items-center justify-center hover:bg-primary-button/80 hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-5 h-5 text-icon-text" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
               </a>
@@ -68,32 +68,32 @@ export default function Footer() {
             <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <a href="#home" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
+                                <a href="#home" className="text-accent-text hover:text-primary-button transition-colors duration-300 text-sm">
                   Home
                 </a>
               </li>
               <li>
-                <a href="#skills" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
-                  Skills & Expertise
+                <a href="#skills" className="text-accent-text hover:text-primary-button transition-colors duration-300 text-sm">
+                  Skills
                 </a>
               </li>
               <li>
-                <a href="#experience" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
+                <a href="#experience" className="text-accent-text hover:text-primary-button transition-colors duration-300 text-sm">
                   Experience
                 </a>
               </li>
               <li>
-                <a href="#projects" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
+                <a href="#projects" className="text-accent-text hover:text-primary-button transition-colors duration-300 text-sm">
                   Projects
                 </a>
               </li>
               <li>
-                <a href="#technologies" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
+                <a href="#technologies" className="text-accent-text hover:text-primary-button transition-colors duration-300 text-sm">
                   Technologies
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-accent-text hover:text-white transition-colors duration-300 text-sm">
+                <a href="#contact" className="text-accent-text hover:text-primary-button transition-colors duration-300 text-sm">
                   Contact
                 </a>
               </li>
@@ -141,43 +141,43 @@ export default function Footer() {
             <h4 className="text-lg font-semibold text-foreground">Get In Touch</h4>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <div className="w-8 h-8 bg-primary-button/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 bg-icon-bg rounded-lg flex items-center justify-center flex-shrink-0">
+                  <svg className="w-4 h-4 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                     <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                   </svg>
                 </div>
-                <a href="mailto:nsengiyumvaclement247@gmail.com" className="text-accent-text text-sm break-all leading-relaxed hover:text-white transition-colors duration-300">
+                <a href="mailto:nsengiyumvaclement247@gmail.com" className="text-accent-text text-sm break-all leading-relaxed hover:text-primary-button transition-colors duration-300">
                   nsengiyumvaclement247@gmail.com
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-primary-button/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 bg-icon-bg rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                 </div>
-                <a href="tel:+250791130583" className="text-accent-text text-sm hover:text-white transition-colors duration-300">
+                <a href="tel:+250791130583" className="text-accent-text text-sm hover:text-primary-button transition-colors duration-300">
                   +250 791 130 583
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-primary-button/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 bg-icon-bg rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                   </svg>
                 </div>
-                <a href="tel:+250726542585" className="text-accent-text text-sm hover:text-white transition-colors duration-300">
+                <a href="tel:+250726542585" className="text-accent-text text-sm hover:text-primary-button transition-colors duration-300">
                   +250 726 542 585
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-primary-button/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <div className="w-8 h-8 bg-icon-bg rounded-lg flex items-center justify-center">
+                  <svg className="w-4 h-4 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <a href="https://maps.google.com/?q=Kigali,Rwanda" target="_blank" rel="noopener noreferrer" className="text-accent-text text-sm hover:text-white transition-colors duration-300">
+                <a href="https://maps.google.com/?q=Kigali,Rwanda" target="_blank" rel="noopener noreferrer" className="text-accent-text text-sm hover:text-primary-button transition-colors duration-300">
                   Kigali, Rwanda
                 </a>
               </div>
