@@ -67,7 +67,7 @@ export default function HeroBioSection() {
       {/* Hero Title - Optimized for Visibility */}
       <div className="text-center mb-6">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground">
-          Mbaduko Christopher
+          Code the future, craft the possible.
         </h1>
         <div className="w-24 h-1.5 bg-primary-button mx-auto rounded-full shadow-lg"></div>
       </div>
