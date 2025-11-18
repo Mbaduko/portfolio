@@ -223,7 +223,7 @@ export default function CertificatesSection() {
                 {/* Certificate Details */}
                 <div className="flex-1 space-y-3">
                   <div>
-                    <h3 className="text-lg font-bold text-foreground group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-lg font-bold text-foreground transition-colors duration-300 cert-title group-hover:text-white">
                       {cert.title}
                     </h3>
                     <p className="text-accent-text text-sm font-medium">{cert.issuer}</p>

@@ -53,6 +53,15 @@
   }
 }
 
+/* Ensure certificate card titles remain readable when hovering in light theme.
+   The components use `group` on the card and `group-hover:text-white` on titles
+   to show white text for dark mode. For light theme we override that hover
+   behavior so the title remains the foreground color (dark) for contrast. */
+:root[data-theme="light"] .group:hover .cert-title,
+:root:not([data-theme]) .group:hover .cert-title {
+  color: var(--foreground) !important;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
