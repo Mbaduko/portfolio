@@ -60,11 +60,11 @@ export default function SectionHeader({
 
           {/* Text Content */}
           <div className="flex-1">
-            <h2 className={`text-2xl font-bold ${currentVariant.text} mb-1`}>
+            <h2 className={`text-base sm:text-xl font-semibold tracking-tight ${currentVariant.text} mb-1`}>
               {title}
             </h2>
             {subtitle && (
-              <p className="text-accent-text text-sm font-medium">
+              <p className="hidden sm:block text-accent-text text-sm font-medium">
                 {subtitle}
               </p>
             )}

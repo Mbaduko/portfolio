@@ -189,7 +189,7 @@ export default function ExperienceSection() {
         variant="accent"
       />
 
-      <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="space-y-8">
         {renderedExperiences}
       </div>
     </SectionWrapper>
