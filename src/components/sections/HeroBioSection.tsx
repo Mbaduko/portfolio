@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import SectionWrapper from '@/components/ui/SectionWrapper';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -62,11 +62,13 @@ export default function HeroBioSection() {
     }
   }, [handleNavigation]);
 
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <SectionWrapper id="home" padding="md" showBackground>
       {/* Hero Title - Optimized for Visibility */}
       <div className="text-center mb-6">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-foreground">
+                <h1 className="fluid-h1 text-4xl md:text-6xl font-bold mb-4 text-foreground">
           Code the future, craft the possible.
         </h1>
         <div className="w-24 h-1.5 bg-primary-button mx-auto rounded-full shadow-lg"></div>
@@ -82,16 +84,17 @@ export default function HeroBioSection() {
             </svg>
             My Journey
           </h3>
-          <p className="text-foreground leading-relaxed mb-3 text-sm">
-            From crafting my first <strong className="text-primary-button">&quot;Hello World&quot;</strong> to architecting 
-            enterprise solutions, my journey has been driven by an insatiable curiosity for technology. 
-            What started as simple scripts evolved into building robust APIs, managing complex databases, 
-            and orchestrating cloud infrastructure.
+          <p className={`text-foreground leading-relaxed mb-3 text-sm ${expanded ? '' : 'line-clamp-3'}`}>
+            From crafting my first <strong className="text-primary-button">&quot;Hello World&quot;</strong> to architecting enterprise solutions, my journey has been driven by an insatiable curiosity for technology. What started as simple scripts evolved into building robust APIs, managing complex databases, and orchestrating cloud infrastructure.
           </p>
-          <p className="text-accent-text leading-relaxed text-xs mb-4">
-            Today, I blend creativity with technical precision to transform ideas into digital realities, 
-            ensuring every line of code tells a story of innovation and excellence.
+          <p className={`text-accent-text leading-relaxed text-xs mb-4 ${expanded ? '' : 'hidden sm:block'}`}>
+            Today, I blend creativity with technical precision to transform ideas into digital realities, ensuring every line of code tells a story of innovation and excellence.
           </p>
+          {!expanded && (
+            <button onClick={() => setExpanded(true)} className="text-primary-button text-sm font-medium hover:underline">
+              Read more
+            </button>
+          )}
           
           {/* Call to Action - Modern Button Components */}
           <div className="flex flex-col sm:flex-row gap-3">
@@ -108,20 +111,22 @@ export default function HeroBioSection() {
             >
               View My Work
             </Button>
-            <Button 
-              variant="secondary" 
-              size="md" 
-              onClick={handleGetInTouch}
-              aria-label="Navigate to contact section"
-              icon={
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                </svg>
-              }
-            >
-              Get In Touch
-            </Button>
+            <div className="hidden sm:block">
+              <Button 
+                variant="secondary" 
+                size="md" 
+                onClick={handleGetInTouch}
+                aria-label="Navigate to contact section"
+                icon={
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                  </svg>
+                }
+              >
+                Get In Touch
+              </Button>
+            </div>
           </div>
         </Card>
 

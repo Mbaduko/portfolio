@@ -109,7 +109,7 @@ export default function CertificatesSection() {
             <p className="text-accent-text text-sm">Filter achievements by type and focus area</p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             {categories.map((category) => (
               <button
                 key={category.id}
@@ -194,13 +194,13 @@ export default function CertificatesSection() {
           </div>
         </div>
 
-        {/* Certificates Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Certificates Grid: 1 column mobile, 2 columns tablet, 3 columns desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCertificates.map((cert) => (
-            <div key={cert.id} className="bg-secondary-bg/60 p-6 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
+            <div key={cert.id} className="bg-secondary-bg/60 p-4 sm:p-6 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/30 transition-all duration-300 shadow-lg hover:shadow-xl group">
               <div className="flex items-start space-x-4">
                 {/* Certificate Logo */}
-                <div className="w-16 h-16 bg-primary-button/15 rounded-xl flex items-center justify-center border border-primary-button/20 flex-shrink-0">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary-button/15 rounded-xl flex items-center justify-center border border-primary-button/20 flex-shrink-0">
                   {!isImageError(cert.id) && cert.logo ? (
                     <Image
                       src={cert.logo}
@@ -229,13 +229,13 @@ export default function CertificatesSection() {
                     <p className="text-accent-text text-sm font-medium">{cert.issuer}</p>
                   </div>
 
-                  <p className="text-accent-text text-sm leading-relaxed">
+                  <p className="text-accent-text text-sm leading-relaxed hidden sm:block">
                     {cert.description}
                   </p>
 
                   {/* Skills */}
                   {cert.skills && cert.skills.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
+                    <div className="hidden sm:flex flex-wrap gap-2">
                       {cert.skills.map((skill, index) => (
                         <span
                           key={index}
@@ -249,7 +249,7 @@ export default function CertificatesSection() {
 
                   {/* Certificate Info */}
                   <div className="flex items-center justify-between pt-2 border-t border-secondary-bg/30">
-                    <div className="flex items-center space-x-4 text-xs">
+                    <div className="hidden sm:flex items-center space-x-4 text-xs">
                       <span className="text-accent-text">
                         <span className="font-semibold">ID:</span> {cert.credentialId}
                       </span>

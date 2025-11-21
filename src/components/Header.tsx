@@ -1,7 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 import ThemeToggle from '@/components/ThemeToggle';
+import MobileDrawer from '@/components/ui/MobileDrawer';
 
 export default function Header() {
   const [activeSection, setActiveSection] = useState('home');
@@ -57,12 +59,16 @@ export default function Header() {
     }
   };
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const { resolvedTheme } = useTheme();
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-secondary-bg/30 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
+          {/* Logo (left on small screens) */}
+          <div className="flex-shrink-0 order-1 md:order-1">
             <button 
               onClick={() => scrollToSection('home')}
               className="flex items-center space-x-2 text-2xl font-bold text-foreground hover:text-primary-button hover:scale-105 transition-all duration-300"
@@ -75,6 +81,8 @@ export default function Header() {
               <span>Mbaduko</span>
             </button>
           </div>
+
+          {/* Desktop/Nav area remains (nav is hidden on mobile) */}
 
           {/* Navigation */}
           <nav className="hidden md:flex space-x-2">
@@ -150,21 +158,27 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Theme Toggle and Resume Button */}
-          <div className="flex items-center space-x-3">
+          {/* Right controls: Theme toggle + Mobile Hamburger */}
+          <div className="flex items-center space-x-3 order-3 md:order-3">
             <ThemeToggle />
-            
-            <button className="bg-primary-button text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-primary-button/90 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl shadow-primary-button/25 hover:shadow-primary-button/40">
-              <div className="flex items-center space-x-2">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+
+            <div className="md:hidden">
+              <button
+                ref={/* attach trigger ref for focus return */ mobileTriggerRef}
+                onClick={() => setMobileOpen((s) => !s)}
+                aria-label="Toggle menu"
+                className={`p-2 rounded-lg transition-all ${resolvedTheme === 'dark' ? 'bg-secondary-bg/30 hover:bg-secondary-bg/40' : 'bg-secondary-bg/40 hover:bg-secondary-bg/50'}`}
+              >
+                <svg className={`w-6 h-6 ${resolvedTheme === 'dark' ? 'text-white' : 'text-black'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
                 </svg>
-                <span>Resume</span>
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} initialFocusRef={mobileTriggerRef} />
     </header>
   );
 }

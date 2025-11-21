@@ -92,13 +92,13 @@ export default function ProjectsSection() {
       />
       
       <div className="space-y-8">
-        {/* Make project cards smaller and more compact — match Skills card sizing/layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Responsive grid: 1 column mobile, 2 columns tablet, 3 columns desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedProjects.map((project) => (
             <div key={project.id} className="group relative h-full">
               <div className="bg-secondary-bg/30 rounded-2xl border border-secondary-bg/30 overflow-hidden transition-all duration-200 group-hover:scale-105 flex flex-col h-full">
                 {/* Compact thumbnail */}
-                <div className="relative h-28 bg-secondary-bg/20 overflow-hidden">
+                <div className="relative h-20 sm:h-28 bg-secondary-bg/20 overflow-hidden">
                   {project.thumbnail && !isImageError(`thumb-${project.id}`) ? (
                     <Image
                       src={project.thumbnail}
@@ -137,7 +137,7 @@ export default function ProjectsSection() {
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 mb-3">
+                  <div className="hidden sm:flex flex-wrap gap-2 mb-3">
                     {project.technologies.map((tech, index) => (
                       <span key={index} className="bg-secondary-bg/10 text-accent-text px-3 py-1 rounded-full text-xs font-medium border border-secondary-bg/20 flex items-center gap-2">
                         <div className="w-5 h-5 bg-white rounded-sm flex items-center justify-center overflow-hidden">
@@ -176,7 +176,7 @@ export default function ProjectsSection() {
                         href={project.githublink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 bg-secondary-bg/40 text-foreground px-3 py-2 rounded-md text-sm font-semibold text-center border border-secondary-bg/20 hover:opacity-95 transition"
+                        className="hidden sm:inline-flex flex-1 bg-secondary-bg/40 text-foreground px-3 py-2 rounded-md text-sm font-semibold text-center border border-secondary-bg/20 hover:opacity-95 transition"
                       >
                         Code
                       </a>

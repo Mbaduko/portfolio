@@ -44,12 +44,12 @@ export default function ExperienceSection() {
       <div key={experience.id} className="relative group">
         {/* Timeline connector */}
         {index < (experiences?.length || 0) - 1 && (
-          <div className="absolute left-6 top-20 w-0.5 h-24 bg-primary-button/20"></div>
+          <div className="absolute left-5 top-16 sm:top-20 w-0.5 h-16 sm:h-24 bg-primary-button/20"></div>
         )}
 
         <div className="flex items-start space-x-6">
           {/* Timeline dot */}
-          <div className="flex-shrink-0 w-12 h-12 bg-icon-bg rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 border border-primary-button/20 shadow-sm">
+          <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-icon-bg rounded-xl flex items-center justify-center group-hover:scale-110 transition-all duration-300 border border-primary-button/20 shadow-sm">
             <svg className="w-5 h-5 text-icon-text" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
               <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
@@ -57,7 +57,7 @@ export default function ExperienceSection() {
           </div>
 
           {/* Experience content */}
-          <div className="flex-1 bg-secondary-bg/45 p-8 rounded-xl border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary-button/20 relative overflow-hidden">
+          <div className="flex-1 bg-secondary-bg/45 p-4 sm:p-6 md:p-8 rounded-xl border border-secondary-bg/30 shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary-button/20 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 opacity-5">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary-button/10 rounded-full -translate-y-16 translate-x-16"></div>
@@ -91,7 +91,7 @@ export default function ExperienceSection() {
                   </div>
                   <p className="text-primary-button font-semibold text-lg">{experience.company}</p>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="hidden sm:flex items-center space-x-2">
                   <svg className="w-4 h-4 text-accent-text" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
@@ -105,7 +105,7 @@ export default function ExperienceSection() {
                 <button
                   onClick={() => toggleExpanded(experience.id)}
                   aria-label={expandedItems.includes(experience.id) ? "Collapse experience details" : "Expand experience details"}
-                  className="bg-secondary-bg/50 hover:bg-secondary-bg/70 text-accent-text hover:text-primary-button transition-all duration-300 hover:scale-110 p-2 rounded-lg border border-secondary-bg/30 hover:border-primary-button/30 cursor-pointer relative z-10 min-w-[40px] min-h-[40px]"
+                  className="hidden sm:inline-flex bg-secondary-bg/50 hover:bg-secondary-bg/70 text-accent-text hover:text-primary-button transition-all duration-300 hover:scale-110 p-2 rounded-lg border border-secondary-bg/30 hover:border-primary-button/30 cursor-pointer relative z-10 min-w-[40px] min-h-[40px]"
                 >
                   <svg 
                     className={`w-6 h-6 transition-transform duration-300 ${
@@ -122,7 +122,7 @@ export default function ExperienceSection() {
 
             {/* Key Achievements - Show only when expanded */}
             {expandedItems.includes(experience.id) && (
-              <div>
+              <div className="hidden sm:block">
                 <h4 className="text-base font-semibold text-foreground mb-4 flex items-center space-x-2">
                   <svg className="w-5 h-5 text-primary-button" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -189,7 +189,7 @@ export default function ExperienceSection() {
         variant="accent"
       />
 
-      <div className="space-y-8">
+      <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {renderedExperiences}
       </div>
     </SectionWrapper>

@@ -34,7 +34,7 @@ function SkillCard({
   }, [isVisible]);
 
   return (
-    <div className="bg-secondary-bg/30 p-6 rounded-2xl border border-secondary-bg/30 hover:border-primary-button/20 transition-all duration-300 group hover:scale-105 flex flex-col">
+    <div className="bg-secondary-bg/30 p-4 sm:p-6 rounded-2xl border border-secondary-bg/30 hover:border-primary-button/20 transition-all duration-300 group hover:scale-105 flex flex-col">
       <div className="flex items-center gap-3 mb-3">
         <div className="flex items-center justify-center w-10 h-10 bg-primary-button/20 rounded-lg group-hover:scale-110 transition-transform duration-300">
           {getSkillIcon(skill.title)}
@@ -43,7 +43,7 @@ function SkillCard({
         <h3 className="text-lg font-semibold text-foreground">{skill.title}</h3>
       </div>
 
-      <p className="text-accent-text text-sm mb-4 leading-relaxed">{skill.description}</p>
+      <p className="hidden sm:block text-accent-text text-sm mb-4 leading-relaxed">{skill.description}</p>
 
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-sm font-semibold text-foreground flex items-center">
@@ -87,6 +87,10 @@ function SkillCard({
             <span className="font-medium">{tech.name}</span>
           </span>
         ))}
+      </div>
+
+      <div className="hidden sm:block">
+        {/* shownTechs list is visible on sm+ via the block above; keep mobile minimal */}
       </div>
 
       {/* keep card height consistent */}
@@ -277,7 +281,7 @@ export default function SkillsSection() {
           variant="secondary"
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skills.map((skill) => {
             return (
               <SkillCard 

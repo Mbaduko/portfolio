@@ -45,7 +45,7 @@ function TechnologyCard({
   const hiddenCount = shouldShowExpandButton ? categoryTechs.length - 3 : 0;
 
   return (
-    <div className="bg-secondary-bg/60 p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
+    <div className="bg-secondary-bg/60 p-4 sm:p-6 md:p-8 rounded-2xl border border-secondary-bg/40 hover:border-primary-button/20 transition-all duration-300 shadow-lg hover:shadow-xl">
       {/* Category Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center space-x-4">
@@ -78,7 +78,11 @@ function TechnologyCard({
       </div>
 
       {/* Technologies List */}
-      <div className="space-y-4">
+      <div className="sm:hidden text-accent-text text-sm mb-4">
+        {categoryTechs.length} technologies
+      </div>
+
+      <div className="hidden sm:block space-y-4">
         {visibleTechs.map((tech) => (
           <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
             {/* Technology Logo */}
@@ -374,7 +378,7 @@ export default function TechnologiesSection() {
       />
       
       <div className="space-y-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.entries(groupedTechnologies).map(([categoryKey, categoryTechs]) => {
             const categoryInfo = getCategoryInfo(categoryKey);
             const isExpanded = expandedCategories.has(categoryKey);
@@ -396,7 +400,7 @@ export default function TechnologiesSection() {
         </div>
 
         {/* Summary Stats - Dynamic from Backend Data */}
-        <div className="bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40">
+          <div className="bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40">
           <h3 className="text-xl font-bold text-foreground mb-6 text-center">Technology Summary</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">

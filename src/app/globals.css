@@ -159,4 +159,36 @@ html.scrolling *::-webkit-scrollbar-thumb,
   overflow: hidden;
 }
 
+/* Responsive & accessibility helpers */
+:root {
+  --transition-fast: 160ms;
+  --transition-medium: 260ms;
+}
+
+.component-transition {
+  transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease, color var(--transition-fast) ease, background-color var(--transition-fast) ease;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .component-transition { transition: none !important; animation: none !important; }
+}
+
+/* Touch target helper for mobile */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem;
+}
+
+/* Clamp utility for fluid typography; use in components where needed */
+.fluid-h1 {
+  font-size: clamp(1.75rem, 4vw + 0.5rem, 3.5rem);
+}
+
+/* Ensure hover-scale only applies on devices that support hover */
+@media (hover: none) {
+  .hover\:scale-105 { transform: none !important; }
+}
+
 
