@@ -199,8 +199,8 @@ export default function HeroBioSection() {
         </div>
       </div>
 
-      {/* Quick Facts - Modern Stats Dashboard */}
-      <Card variant="stats">
+      {/* Quick Facts - Modern Stats Dashboard (hidden on small screens) */}
+      <Card variant="stats" className="hidden sm:block">
         <h3 className="text-lg font-bold text-foreground mb-3 text-center">Quick Facts</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <button 
