@@ -131,7 +131,49 @@ export default function HeroBioSection() {
         </Card>
 
         {/* Core Expertise - Modern Card Grid */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* On small screens, show quick facts as cards */}
+        <div className="block sm:hidden w-full">
+          <div className="grid grid-cols-2 gap-3">
+            <Card variant="expertise" className="flex flex-col items-center justify-center py-4">
+              <div className="flex flex-col items-center">
+                <svg className="w-5 h-5 text-primary-button mb-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                <div className="text-lg font-bold text-primary-button">{stats.yearsExperience}</div>
+                <div className="text-accent-text text-xs font-medium">Years Experience</div>
+              </div>
+            </Card>
+            <Card variant="expertise" className="flex flex-col items-center justify-center py-4">
+              <div className="flex flex-col items-center">
+                <svg className="w-5 h-5 text-primary-button mb-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                <div className="text-lg font-bold text-primary-button">{stats.projectsCount}</div>
+                <div className="text-accent-text text-xs font-medium">Projects Completed</div>
+              </div>
+            </Card>
+            <Card variant="expertise" className="flex flex-col items-center justify-center py-4">
+              <div className="flex flex-col items-center">
+                <svg className="w-5 h-5 text-primary-button mb-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                </svg>
+                <div className="text-lg font-bold text-primary-button">{stats.technologiesCount}</div>
+                <div className="text-accent-text text-xs font-medium">Technologies Mastered</div>
+              </div>
+            </Card>
+            <Card variant="expertise" className="flex flex-col items-center justify-center py-4">
+              <div className="flex flex-col items-center">
+                <svg className="w-5 h-5 text-primary-button mb-1" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <div className="text-lg font-bold text-primary-button">{stats.averageSkill}%</div>
+                <div className="text-accent-text text-xs font-medium">Average Skill</div>
+              </div>
+            </Card>
+          </div>
+        </div>
+        {/* Only show expertise cards on sm+ screens */}
+        <div className="hidden sm:grid grid-cols-2 gap-3 w-full">
           {expertise.map((item) => (
             <Card 
               key={item.title} 
