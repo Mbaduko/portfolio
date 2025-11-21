@@ -67,10 +67,8 @@ export default function ExperienceSection() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
               <div className="space-y-3">
-                <h3 className="text-xl font-bold text-foreground">
-                  {experience.position}
-                </h3>
-                <div className="flex items-center space-x-3">
+                {/* Mobile: horizontal bar layout */}
+                <div className="flex items-center space-x-3 sm:hidden">
                   {/* Company Logo */}
                   <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-2 border border-secondary-bg/30 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105">
                     {isImageError(`company-${experience.id}`) || !experience.companyLogo ? (
@@ -89,7 +87,37 @@ export default function ExperienceSection() {
                       />
                     )}
                   </div>
-                  <p className="text-primary-button font-semibold text-lg">{experience.company}</p>
+                  <div className="flex flex-col">
+                    <h3 className="text-base font-bold text-foreground leading-tight">{experience.position}</h3>
+                    <p className="text-primary-button font-semibold text-sm">{experience.company}</p>
+                  </div>
+                </div>
+                {/* Desktop: stacked layout */}
+                <div className="hidden sm:block">
+                  <h3 className="text-xl font-bold text-foreground">
+                    {experience.position}
+                  </h3>
+                  <div className="flex items-center space-x-3">
+                    {/* Company Logo */}
+                    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-2 border border-secondary-bg/30 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105">
+                      {isImageError(`company-${experience.id}`) || !experience.companyLogo ? (
+                        <span className="text-xs font-bold text-primary-button">
+                          {experience.company.charAt(0)}
+                        </span>
+                      ) : (
+                        <Image 
+                          src={experience.companyLogo} 
+                          alt={`${experience.company} logo`}
+                          width={40}
+                          height={40}
+                          className="w-full h-full object-contain"
+                          onError={() => handleImageError(`company-${experience.id}`)}
+                          unoptimized={experience.companyLogo?.includes('cloudinary.com') || experience.companyLogo?.includes('google.com') || false}
+                        />
+                      )}
+                    </div>
+                    <p className="text-primary-button font-semibold text-lg">{experience.company}</p>
+                  </div>
                 </div>
                 <div className="hidden sm:flex items-center space-x-2">
                   <svg className="w-4 h-4 text-accent-text" fill="currentColor" viewBox="0 0 20 20">
@@ -99,7 +127,7 @@ export default function ExperienceSection() {
                 </div>
               </div>
               <div className="mt-4 sm:mt-0 flex items-center space-x-4">
-                <span className="bg-primary-button/15 text-primary-button px-4 py-2 rounded-full text-sm font-semibold border border-primary-button/20 shadow-sm hover:shadow-md transition-all duration-300">
+                <span className="text-primary-button text-sm font-semibold sm:bg-primary-button/15 sm:px-4 sm:py-2 sm:rounded-full sm:border sm:border-primary-button/20 sm:shadow-sm sm:hover:shadow-md sm:transition-all sm:duration-300 ml-auto">
                   {formatDateRange(experience.from, experience.to)}
                 </span>
                 <button
