@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type Props = {
   open: boolean;
@@ -25,6 +26,7 @@ function getFocusableElements(container: HTMLElement | null) {
 export default function MobileDrawer({ open, onClose, initialFocusRef }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const prevActiveRef = useRef<HTMLElement | null>(null);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -91,6 +93,8 @@ export default function MobileDrawer({ open, onClose, initialFocusRef }: Props) 
 
   if (!open) return null;
 
+  const iconColor = resolvedTheme === 'dark' ? '#fff' : '#222';
+
   const drawer = (
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
@@ -114,7 +118,7 @@ export default function MobileDrawer({ open, onClose, initialFocusRef }: Props) 
             </div>
           </div>
           <button onClick={onClose} aria-label="Close menu" className="p-2 rounded-md hover:bg-secondary-bg/40">
-            <svg className="w-5 h-5 text-icon-text" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke={iconColor}>
               <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
