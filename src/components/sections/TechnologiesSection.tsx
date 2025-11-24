@@ -59,10 +59,26 @@ function TechnologyCard({
             <p className="text-accent-text text-sm mt-1">{categoryInfo.description}</p>
           </div>
         </div>
+        {/* Mobile: Toggle button always visible */}
+        <button
+          onClick={onToggle}
+          className="sm:hidden flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-primary-button/10 hover:bg-primary-button/20 border border-primary-button/20 text-primary-button text-sm transition-all duration-200"
+        >
+          <span>{isExpanded ? 'Hide' : 'View'}</span>
+          <svg 
+            className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        {/* Desktop: Show expand/collapse only if needed */}
         {shouldShowExpandButton && (
           <button
             onClick={onToggle}
-            className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-primary-button/10 hover:bg-primary-button/20 border border-primary-button/20 text-primary-button text-sm transition-all duration-200"
+            className="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-primary-button/10 hover:bg-primary-button/20 border border-primary-button/20 text-primary-button text-sm transition-all duration-200"
           >
             <span>{isExpanded ? 'Show Less' : `+${hiddenCount} more`}</span>
             <svg 
@@ -132,6 +148,59 @@ function TechnologyCard({
           </div>
         ))}
       </div>
+      {/* Mobile: Technologies list, only if expanded */}
+      {isExpanded && (
+        <div className="sm:hidden space-y-4 mt-4">
+          {visibleTechs.map((tech) => (
+            <div key={tech.id} className="flex items-center space-x-4 p-4 bg-secondary-bg/60 rounded-xl border border-secondary-bg/30 hover:border-primary-button/30 transition-all duration-300">
+              {/* Technology Logo */}
+              <div className="w-10 h-10 bg-primary-button/15 rounded-lg flex items-center justify-center p-2 border border-primary-button/20 flex-shrink-0">
+                {!isImageError(`${categoryKey}-${tech.name}`) && tech.logo && isValidImageUrl(tech.logo) ? (
+                  <Image 
+                    src={tech.logo} 
+                    alt={`${tech.name} logo`}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                    onError={() => handleImageError(`${categoryKey}-${tech.name}`)}
+                    unoptimized={tech.logo?.includes('cloudinary.com') || tech.logo?.includes('google.com') || false}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-accent-text/15 rounded flex items-center justify-center">
+                    <span className="text-accent-text font-bold text-xs">
+                      {tech.name.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Technology Info */}
+              <div className="flex-1">
+                <h4 className="text-base font-semibold text-foreground mb-1">{tech.name}</h4>
+                <p className="text-xs text-accent-text mb-2">{tech.experience}</p>
+                <div className="w-full bg-secondary-bg/80 rounded-full h-1.5 overflow-hidden">
+                  <div 
+                    className="h-full rounded-full bg-primary-button/50 transition-all duration-1000 ease-out"
+                    data-level={tech.level}
+                    ref={(el) => {
+                      if (el) {
+                        el.style.width = `${tech.level}%`;
+                      }
+                    }}
+                  ></div>
+                </div>
+              </div>
+
+              {/* Skill Level */}
+              <div className="text-right flex-shrink-0">
+                <span className="text-xs font-semibold text-accent-text">
+                  {tech.level}%
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -399,8 +468,8 @@ export default function TechnologiesSection() {
           })}
         </div>
 
-        {/* Summary Stats - Dynamic from Backend Data */}
-          <div className="bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40">
+        {/* Summary Stats - Dynamic from Backend Data, hidden on mobile */}
+        <div className="hidden sm:block bg-secondary-bg/60 rounded-2xl p-8 border border-secondary-bg/40">
           <h3 className="text-xl font-bold text-foreground mb-6 text-center">Technology Summary</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="text-center">
