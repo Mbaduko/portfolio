@@ -67,7 +67,7 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-secondary-bg/30 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo (left on small screens) */}
+          {/* Logo (left on all screens) */}
           <div className="flex-shrink-0 order-1 md:order-1">
             <button 
               onClick={() => scrollToSection('home')}
@@ -82,10 +82,8 @@ export default function Header() {
             </button>
           </div>
 
-          {/* Desktop/Nav area remains (nav is hidden on mobile) */}
-
-          {/* Navigation */}
-          <nav className="hidden md:flex space-x-2">
+          {/* Navigation (center on large screens) */}
+          <nav className="hidden md:flex flex-1 justify-center space-x-2 order-2">
             <button 
               onClick={() => scrollToSection('home')}
               className={`transition-all duration-300 ease-in-out px-4 py-2.5 rounded-xl font-medium ${
@@ -158,7 +156,7 @@ export default function Header() {
             </button>
           </nav>
 
-          {/* Right controls: Theme toggle + Mobile Hamburger */}
+          {/* Theme toggle + mobile hamburger (right) */}
           <div className="flex items-center space-x-3 order-3 md:order-3">
             <ThemeToggle />
 
