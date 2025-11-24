@@ -60,7 +60,7 @@ export default function Header() {
   };
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const mobileTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const mobileTriggerRef = useRef<HTMLButtonElement>(null);
   const { resolvedTheme } = useTheme();
 
   return (
@@ -164,7 +164,7 @@ export default function Header() {
 
             <div className="md:hidden">
               <button
-                ref={/* attach trigger ref for focus return */ mobileTriggerRef}
+                ref={mobileTriggerRef}
                 onClick={() => setMobileOpen((s) => !s)}
                 aria-label="Toggle menu"
                 className={`p-2 rounded-lg transition-all ${resolvedTheme === 'dark' ? 'bg-secondary-bg/30 hover:bg-secondary-bg/40' : 'bg-secondary-bg/40 hover:bg-secondary-bg/50'}`}
@@ -178,7 +178,7 @@ export default function Header() {
         </div>
       </div>
 
-      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} initialFocusRef={mobileTriggerRef} />
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} initialFocusRef={mobileTriggerRef as React.RefObject<HTMLElement>} />
     </header>
   );
 }
